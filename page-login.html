@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap ve jQuery CDN'leri -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>PsyAware - HTML5 Yönetim Paneli</title>
+  <meta name="description" content="PsyAware - HTML5 Yönetim Paneli">
+  <style>
+    body {
+      background-color: #E3F2FD;
+      font-family: 'Poppins', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(227, 242, 253, 0.85);
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: none;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    .error {
+      border-color: #dc3545;
+    }
+    .error-message {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #2C3E50;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .logo-image {
+      width: 250px;
+      height: 250px;
+      margin-bottom: 1rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .logo-tagline {
+      color: #7F8C8D;
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.4;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .symbol-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+    .symbol {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #3498DB;
+    }
+    .symbol i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+    }
+    .card-header {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-bottom: none;
+      padding: 1.5rem;
+    }
+    .btn-primary {
+      background-color: #3498DB;
+      border-color: #3498DB;
+      padding: 0.8rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #2980B9;
+      border-color: #2980B9;
+      transform: translateY(-2px);
+    }
+    .form-control {
+      border-radius: 8px;
+      padding: 0.8rem;
+      border: 1px solid #E0E0E0;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .form-control:focus {
+      border-color: #3498DB;
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+    .card-body {
+      padding: 2rem;
+    }
+    .form-group label {
+      font-weight: 500;
+      color: #2C3E50;
+      margin-bottom: 0.5rem;
+    }
+    .btn-outline-primary {
+      color: #3498DB;
+      border-color: #3498DB;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-primary:hover {
+      background-color: #3498DB;
+      border-color: #3498DB;
+      transform: translateY(-2px);
+    }
+    .logo-icon {
+      color: #3498DB;
+      margin-right: 0.5rem;
+    }
+    .left-design, .right-design {
+      padding: 20px;
+    }
+    .design-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .design-box:hover {
+      transform: translateY(-5px);
+    }
+    .design-icon {
+      font-size: 2.5rem;
+      color: #3498DB;
+      margin-bottom: 15px;
+    }
+    .design-box h4 {
+      color: #2C3E50;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .design-box p {
+      color: #7F8C8D;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .left-design, .right-design {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <br><br>  
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <div class="left-design">
+        <div class="design-box">
+          <i class="fas fa-brain design-icon"></i>
+          <h4>Psikolojik Destek</h4>
+          <p>Uzman psikologlarımızla birlikte size özel destek programları</p>
+        </div>
+        <div class="design-box">
+          <i class="fas fa-chart-line design-icon"></i>
+          <h4>İlerleme Takibi</h4>
+          <p>Gelişiminizi detaylı raporlarla takip edin</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="logo-container">
+        <img src="images/logo.png" alt="PsyAware Logo" class="logo-image">
+        <a href="/" class="logo">
+          <i class="fas fa-brain logo-icon"></i>PsyAware
+        </a>
+        <p class="logo-tagline">Psikolojik Farkındalık İçin Etkileşimli Dashboard Tabanlı Bilgi Sistemi</p>
+        <div class="symbol-container">
+          <div class="symbol">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="symbol">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="symbol">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <header class="card-header">
+          <a href="page-register.html" class="float-right btn btn-outline-primary mt-1">Kayıt Ol</a>
+          <h4 class="card-title mt-2">Giriş Yap</h4>
+        </header>
+        <article class="card-body">
+          <form id="loginForm" onsubmit="return handleSubmit(event)">
+            <div class="form-group">
+              <label>E-posta Adresi</label>
+              <input type="email" class="form-control" name="email" required placeholder="E-posta adresinizi giriniz">
+              <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+              <label>Şifre</label>
+              <input class="form-control" type="password" name="password" required placeholder="Şifrenizi giriniz">
+              <div class="error-message" id="passwordError"></div>
+              <a href="pages-forget.html" class="text-primary" style="font-size: 0.9rem; display: block; margin-top: 0.5rem;">Şifremi Unuttum!</a>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember">
+                <label class="form-check-label" for="remember">
+                  Beni hatırla
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+            </div>
+          </form>
+        </article>
+
+        <div class="border-top card-body text-center">
+          <a href="page-register.html" class="forgot-link">Hesabınız yok mu? Kayıt olun</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="right-design">
+        <div class="design-box">
+          <i class="fas fa-users design-icon"></i>
+          <h4>Topluluk Desteği</h4>
+          <p>Benzer deneyimleri paylaşan kişilerle bağlantı kurun</p>
+        </div>
+        <div class="design-box">
+          <i class="fas fa-lock design-icon"></i>
+          <h4>Güvenli Platform</h4>
+          <p>Verileriniz güvende, gizliliğiniz bizim önceliğimiz</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<script>
+function validateForm() {
+  let isValid = true;
+  const form = document.getElementById('loginForm');
+  const formData = new FormData(form);
+
+  // E-posta kontrolü
+  const email = formData.get('email');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    document.getElementById('emailError').textContent = 'Geçerli bir e-posta adresi giriniz';
+    isValid = false;
+  } else {
+    document.getElementById('emailError').textContent = '';
+  }
+
+  // Şifre kontrolü
+  const password = formData.get('password');
+  if (password.length < 6) {
+    document.getElementById('passwordError').textContent = 'Şifre en az 6 karakter olmalıdır';
+    isValid = false;
+  } else {
+    document.getElementById('passwordError').textContent = '';
+  }
+
+  return isValid;
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  
+  if (!validateForm()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Hata!',
+      text: 'Lütfen tüm alanları doğru şekilde doldurunuz.',
+      confirmButtonText: 'Tamam'
+    });
+    return false;
+  }
+  
+  // Başarılı giriş simülasyonu
+  Swal.fire({
+    icon: 'success',
+    title: 'Başarılı!',
+    text: 'Giriş işleminiz başarıyla tamamlandı.',
+    confirmButtonText: 'Tamam'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      document.getElementById('loginForm').reset();
+      // Burada ana sayfaya yönlendirme yapılabilir
+      // window.location.href = 'index.html';
+    }
+  });
+  
+  return false;
+}
+</script>
+
+</body>
+</html> 

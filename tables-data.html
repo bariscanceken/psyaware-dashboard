@@ -1,0 +1,387 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="tr"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PsyAware - HTML5 Yönetim Paneli</title>
+    <meta name="description" content="PsyAware - HTML5 Yönetim Paneli">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+<body>
+    <!-- Sol Panel -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Gösterge Paneli</a>
+                    </li>
+                    <li class="menu-title">Arayüz Öğeleri</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tablolar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basit Tablolar</a></li>
+                            <li><i class="fa fa-table"></i><a href="tables-data.html">Veri Tabloları</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children active dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Formlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basit Formlar</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Gelişmiş Formlar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title">İkonlar</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>İkonlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Mükemmel İkonlar</a></li>
+                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themify İkonları</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widget'lar</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Grafikler</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">JS Grafikleri</a></li>
+                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Grafik</a></li>
+                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Grafik</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Haritalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Haritalar</a></li>
+                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vektör Haritalar</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">Ekstralar</li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Sayfalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Giriş</a></li>
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Kayıt Ol</a></li>
+                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Şifremi Unuttum</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Sağ Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Başlık-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        <div class="form-inline">
+                            <form class="search-form">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Ara..." aria-label="Ara">
+                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                            </form>
+                        </div>
+
+                        <div class="dropdown for-notification">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell"></i>
+                                <span class="count bg-danger">3</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="notification">
+                                <p class="red">3 Bildiriminiz var</p>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-check"></i>
+                                    <p>Sunucu #1 aşırı yüklendi.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-info"></i>
+                                    <p>Sunucu #2 aşırı yüklendi.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-warning"></i>
+                                    <p>Sunucu #3 aşırı yüklendi.</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown for-message">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-envelope"></i>
+                                <span class="count bg-primary">4</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="message">
+                                <p class="red">4 Mesajınız var</p>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Ahmet Yılmaz</span>
+                                        <span class="time float-right">Az önce</span>
+                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Mehmet Demir</span>
+                                        <span class="time float-right">5 dakika önce</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Ayşe Kaya</span>
+                                        <span class="time float-right">10 dakika önce</span>
+                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Zeynep Yıldız</span>
+                                        <span class="time float-right">15 dakika önce</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="Kullanıcı Avatarı">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i>Profilim</a>
+                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Bildirimler <span class="count">13</span></a>
+                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Ayarlar</a>
+                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Çıkış</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Gösterge Paneli</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="#">Gösterge Paneli</a></li>
+                                    <li><a href="#">Tablo</a></li>
+                                    <li class="active">Veri Tablosu</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Psikolog Listesi</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Ad Soyad</th>
+                                            <th>Uzmanlık Alanı</th>
+                                            <th>E-posta</th>
+                                            <th>Telefon</th>
+                                            <th>Durum</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Dr. Ayşe Yılmaz</td>
+                                            <td>Bilişsel Davranışçı Terapi</td>
+                                            <td>ayse.yilmaz@psyaware.com</td>
+                                            <td>0532 123 4567</td>
+                                            <td><span class="badge badge-success">Aktif</span></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Dr. Mehmet Demir</td>
+                                            <td>EMDR Terapisi</td>
+                                            <td>mehmet.demir@psyaware.com</td>
+                                            <td>0533 234 5678</td>
+                                            <td><span class="badge badge-success">Aktif</span></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Dr. Zeynep Kaya</td>
+                                            <td>Çift ve Aile Terapisi</td>
+                                            <td>zeynep.kaya@psyaware.com</td>
+                                            <td>0534 345 6789</td>
+                                            <td><span class="badge badge-warning">İzinli</span></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Dr. Ali Öztürk</td>
+                                            <td>Psikodinamik Terapi</td>
+                                            <td>ali.ozturk@psyaware.com</td>
+                                            <td>0535 456 7890</td>
+                                            <td><span class="badge badge-success">Aktif</span></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Dr. Elif Şahin</td>
+                                            <td>Oyun Terapisi</td>
+                                            <td>elif.sahin@psyaware.com</td>
+                                            <td>0536 567 8901</td>
+                                            <td><span class="badge badge-danger">Pasif</span></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+        <div class="clearfix"></div>
+
+        <footer class="site-footer">
+            <div class="footer-inner bg-white">
+                <div class="row">
+                    <div class="col-sm-6">
+                        Telif Hakkı &copy; 2018 PsyAware
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        Tasarım <a href="https://colorlib.com">Colorlib</a> tarafından
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div><!-- /#right-panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+
+    <script src="assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="assets/js/init/datatables-init.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#bootstrap-data-table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+                },
+                "pageLength": 25,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tümü"]],
+                "processing": true,
+                "deferRender": true,
+                "order": [[0, 'asc']],
+                "responsive": true,
+                "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+                "initComplete": function() {
+                    // Arama kutusuna placeholder ekle
+                    $('.dataTables_filter input').attr('placeholder', 'Ara...');
+                }
+            });
+        });
+  </script>
+
+
+</body>
+</html>

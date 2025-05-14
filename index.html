@@ -1,0 +1,813 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PsyAware - HTML5 Yönetim Paneli</title>
+    <meta name="description" content="PsyAware - HTML5 Yönetim Paneli">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="shortcut icon" href="images/logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/extension/bmap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/world.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/china.js"></script>
+
+   <style>
+    #weatherWidget .currentDesc {
+        color: #ffffff!important;
+    }
+        .traffic-chart {
+            min-height: 335px;
+        }
+        #flotPie1  {
+            height: 150px;
+        }
+        #flotPie1 td {
+            padding:3px;
+        }
+        #flotPie1 table {
+            top: 20px!important;
+            right: -10px!important;
+        }
+        .chart-container {
+            display: table;
+            min-width: 270px ;
+            text-align: left;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #flotLine5  {
+             height: 105px;
+        }
+
+        #flotBarChart {
+            height: 150px;
+        }
+        #cellPaiChart{
+            height: 160px;
+        }
+
+        .stat-text {
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Left Panel -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Gösterge Paneli</a>
+                    </li>
+                    <li class="menu-title">Arayüz Öğeleri</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tablolar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basit Tablolar</a></li>
+                            <li><i class="fa fa-table"></i><a href="tables-data.html">Veri Tabloları</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Formlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basit Formlar</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Gelişmiş Formlar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title">İkonlar</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>İkonlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Mükemmel İkonlar</a></li>
+                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themify İkonları</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widget'lar</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Grafikler</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">JS Grafikleri</a></li>
+                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Grafik</a></li>
+                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Grafik</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Haritalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Haritalar</a></li>
+                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vektör Haritalar</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">Ekstralar</li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Sayfalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Giriş</a></li>
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Kayıt Ol</a></li>
+                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Şifremi Unuttum</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside>
+    <!-- /#left-panel -->
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        <div class="form-inline">
+                            <form class="search-form">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Ara ..." aria-label="Search">
+                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                            </form>
+                        </div>
+
+                        <div class="dropdown for-notification">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell"></i>
+                                <span class="count bg-danger">3</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="notification">
+                                <p class="red">3 Bildiriminiz var</p>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-check"></i>
+                                    <p>Sunucu #1 aşırı yüklendi.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-info"></i>
+                                    <p>Sunucu #2 aşırı yüklendi.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-warning"></i>
+                                    <p>Sunucu #3 aşırı yüklendi.</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown for-message">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-envelope"></i>
+                                <span class="count bg-primary">4</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="message">
+                                <p class="red">4 Mesajınız var</p>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Ahmet Yılmaz</span>
+                                        <span class="time float-right">Az önce</span>
+                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Mehmet Demir</span>
+                                        <span class="time float-right">5 dakika önce</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Ayşe Kaya</span>
+                                        <span class="time float-right">10 dakika önce</span>
+                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Zeynep Yıldız</span>
+                                        <span class="time float-right">15 dakika önce</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Profilim</a>
+
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Bildirimler <span class="count">13</span></a>
+
+                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Ayarlar</a>
+
+                            <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Çıkış Yap</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <!-- Widgets  -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-2">
+                                        <i class="fa fa-database"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="count">39776</span></div>
+                                            <div class="stat-heading">Veri Satırı</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <i class="fa fa-database"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="count">6829873</span></div>
+                                            <div class="stat-heading">Veri Sayısı</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-4">
+                                        <i class="fa fa-bar-chart"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="count">4</span></div>
+                                            <div class="stat-heading">Farklı Grafik Sayısı</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-5">
+                                        <i class="fa fa-question-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="count">172</span></div>
+                                            <div class="stat-heading">Soruya Cevap</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Widgets -->
+
+                <!-- Dünya Haritası -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Dünya Genelinde Veri Dağılımı</h4>
+                                <div id="vmap" style="width:100%;height:600px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Dünya Haritası -->
+
+                <div class="clearfix"></div>
+            </div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-inner bg-white">
+                <div class="row">
+                    <div class="col-sm-6">
+                        Telif Hakkı &copy; 2018 PsyAware
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        Tasarım <a href="https://colorlib.com">Colorlib</a> tarafından
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /.site-footer -->
+    </div>
+    <!-- /#right-panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/extension/bmap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/world.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/china.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!--  Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+    <!--Chartist Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="assets/js/init/weather-init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+    <script src="assets/js/init/fullcalendar-init.js"></script>
+
+    <!--Local Stuff-->
+    <script>
+        jQuery(document).ready(function($) {
+            "use strict";
+            $('.count').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: $(this).data('count')
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now).toLocaleString());
+                    }
+                });
+            });
+            // Pie chart flotPie1
+            var piedata = [
+                { label: "Masaüstü ziyaretleri", data: [[1,32]], color: '#5c6bc0'},
+                { label: "Tablet ziyaretleri", data: [[1,33]], color: '#ef5350'},
+                { label: "Mobil ziyaretler", data: [[1,35]], color: '#66bb6a'}
+            ];
+
+            $.plot('#flotPie1', piedata, {
+                series: {
+                    pie: {
+                        show: true,
+                        radius: 1,
+                        innerRadius: 0.65,
+                        label: {
+                            show: true,
+                            radius: 2/3,
+                            threshold: 1
+                        },
+                        stroke: {
+                            width: 0
+                        }
+                    }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                }
+            });
+            // Pie chart flotPie1  End
+            // cellPaiChart
+            var cellPaiChart = [
+                { label: "Doğrudan Satış", data: [[1,65]], color: '#5b83de'},
+                { label: "Kanal Satışı", data: [[1,35]], color: '#00bfa5'}
+            ];
+            $.plot('#cellPaiChart', cellPaiChart, {
+                series: {
+                    pie: {
+                        show: true,
+                        stroke: {
+                            width: 0
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                },grid: {
+                    hoverable: true,
+                    clickable: true
+                }
+
+            });
+            // cellPaiChart End
+            // Line Chart  #flotLine5
+            var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
+
+            var plot = $.plot($('#flotLine5'),[{
+                data: newCust,
+                label: 'Yeni Veri Akışı',
+                color: '#fff'
+            }],
+            {
+                series: {
+                    lines: {
+                        show: true,
+                        lineColor: '#fff',
+                        lineWidth: 2
+                    },
+                    points: {
+                        show: true,
+                        fill: true,
+                        fillColor: "#ffffff",
+                        symbol: "circle",
+                        radius: 3
+                    },
+                    shadowSize: 0
+                },
+                points: {
+                    show: true,
+                },
+                legend: {
+                    show: false
+                },
+                grid: {
+                    show: false
+                }
+            });
+            // Line Chart  #flotLine5 End
+            // Traffic Chart using chartist
+            if ($('#traffic-chart').length) {
+                var chart = new Chartist.Line('#traffic-chart', {
+                  labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'],
+                  series: [
+                  [0, 18000, 35000,  25000,  22000,  0],
+                  [0, 33000, 15000,  20000,  15000,  300],
+                  [0, 15000, 28000,  15000,  30000,  5000]
+                  ]
+              }, {
+                  low: 0,
+                  showArea: true,
+                  showLine: false,
+                  showPoint: false,
+                  fullWidth: true,
+                  axisX: {
+                    showGrid: true
+                }
+            });
+
+                chart.on('draw', function(data) {
+                    if(data.type === 'line' || data.type === 'area') {
+                        data.element.animate({
+                            d: {
+                                begin: 2000 * data.index,
+                                dur: 2000,
+                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                                to: data.path.clone().stringify(),
+                                easing: Chartist.Svg.Easing.easeOutQuint
+                            }
+                        });
+                    }
+                });
+            }
+            // Traffic Chart using chartist End
+            //Traffic chart chart-js
+            if ($('#TrafficChart').length) {
+                var ctx = document.getElementById( "TrafficChart" );
+                ctx.height = 150;
+                var myChart = new Chart( ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [ "Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem" ],
+                        datasets: [
+                        {
+                            label: "Ziyaret",
+                            borderColor: "rgba(4, 73, 203,.09)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(4, 73, 203,.5)",
+                            data: [ 0, 2900, 5000, 3300, 6000, 3250, 0 ]
+                        },
+                        {
+                            label: "Hemen Çıkış",
+                            borderColor: "rgba(245, 23, 66, 0.9)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(245, 23, 66,.5)",
+                            pointHighlightStroke: "rgba(245, 23, 66,.5)",
+                            data: [ 0, 4200, 4500, 1600, 4200, 1500, 4000 ]
+                        },
+                        {
+                            label: "Hedeflenen",
+                            borderColor: "rgba(40, 169, 46, 0.9)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(40, 169, 46, .5)",
+                            pointHighlightStroke: "rgba(40, 169, 46,.5)",
+                            data: [1000, 5200, 3600, 2600, 4200, 5300, 0 ]
+                        }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        }
+
+                    }
+                } );
+            }
+            //Traffic chart chart-js  End
+            // Bar Chart #flotBarChart
+            $.plot("#flotBarChart", [{
+                data: [[0, 18], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6],[16,15], [18, 9],[20,17], [22,7],[24,4], [26,9],[28,11]],
+                bars: {
+                    show: true,
+                    lineWidth: 0,
+                    fillColor: '#ffffff8a'
+                }
+            }], {
+                grid: {
+                    show: false
+                }
+            });
+            // Bar Chart #flotBarChart End
+            
+            // 3D World Map
+            var chartDom = document.getElementById('worldMap3D');
+            var myChart = echarts.init(chartDom);
+
+            var option = {
+                backgroundColor: '#404a59',
+                tooltip: {
+                    formatter: function(params) {
+                        return params.name + ': ' + params.value[2] + ' katılımcı';
+                    }
+                },
+                geo3D: {
+                    map: 'world',
+                    roam: true,
+                    itemStyle: {
+                        color: '#323c48',
+                        opacity: 1,
+                        borderWidth: 1,
+                        borderColor: '#404a59'
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            color: '#2a333d'
+                        }
+                    },
+                    light: {
+                        main: {
+                            intensity: 1.2,
+                            shadow: true
+                        },
+                        ambient: {
+                            intensity: 0.3
+                        }
+                    },
+                    viewControl: {
+                        distance: 120,
+                        alpha: 30,
+                        beta: 0,
+                        center: [0, 0, 0],
+                        animation: true,
+                        animationDurationUpdate: 1000
+                    },
+                    groundPlane: {
+                        show: true,
+                        color: '#404a59'
+                    },
+                    regionHeight: 3
+                },
+                series: [{
+                    type: 'scatter3D',
+                    coordinateSystem: 'geo3D',
+                    data: [
+                        {name: 'Türkiye', value: [35.2433, 38.9637, 80]},
+                        {name: 'Amerika', value: [-95.7129, 37.0902, 8207]},
+                        {name: 'İngiltere', value: [-3.435973, 55.378051, 1180]},
+                        {name: 'Almanya', value: [10.4515, 51.1657, 314]},
+                        {name: 'Fransa', value: [2.2137, 46.2276, 187]},
+                        {name: 'İtalya', value: [12.5674, 41.8719, 138]},
+                        {name: 'İspanya', value: [-3.7492, 40.4637, 90]},
+                        {name: 'Rusya', value: [105.3188, 61.524, 61]},
+                        {name: 'Çin', value: [104.1954, 35.8617, 12]},
+                        {name: 'Japonya', value: [138.2529, 36.2048, 85]}
+                    ].map(function (item) {
+                        return {
+                            name: item.name,
+                            value: [...item.value, Math.sqrt(item.value[2])],
+                            itemStyle: {
+                                color: '#ffa500'
+                            }
+                        };
+                    }),
+                    symbolSize: 12,
+                    label: {
+                        show: false,
+                        formatter: '{b}',
+                        position: 'right',
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 12
+                        }
+                    },
+                    emphasis: {
+                        label: {
+                            show: true
+                        },
+                        itemStyle: {
+                            color: '#ff0'
+                        }
+                    }
+                }]
+            };
+
+            myChart.setOption(option);
+
+            // Pencere boyutu değiştiğinde haritayı yeniden boyutlandır
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Ülke verileri
+            var countryData = {
+                'MY': 21605, 'US': 8207, 'GB': 1180, 'CA': 978, 'ID': 884, 'PH': 749, 'AU': 608,
+                'NONE': 539, 'IN': 446, 'DE': 314, 'SG': 292, 'NZ': 216, 'FR': 187, 'BR': 180,
+                'PL': 172, 'BN': 171, 'MX': 154, 'RO': 143, 'IT': 138, 'NL': 114, 'ES': 90,
+                'JP': 85, 'FI': 81, 'TR': 80, 'ZA': 79, 'PK': 79, 'SE': 76, 'EG': 75, 'GR': 74,
+                'IE': 74, 'RS': 67, 'PT': 61, 'RU': 61, 'CZ': 58, 'HK': 57, 'SA': 56, 'AR': 55,
+                'HR': 54, 'DK': 52, 'AE': 52, 'JM': 50, 'NO': 49, 'HU': 47, 'CH': 46, 'AT': 45,
+                'VN': 39, 'BG': 38, 'BE': 35, 'KR': 31, 'CL': 30, 'TH': 29, 'CO': 27, 'IL': 25,
+                'SK': 24, 'LT': 24, 'UA': 24, 'MA': 23, 'BA': 22, 'NG': 21, 'EE': 20, 'BD': 19,
+                'VE': 18, 'PE': 18, 'JO': 18, 'SI': 17, 'TW': 16, 'AL': 16, 'LK': 15, 'MK': 15,
+                'IS': 14, 'KW': 14, 'LB': 13, 'CR': 12, 'QA': 12, 'CN': 12, 'GE': 11, 'TT': 10,
+                'SV': 9, 'IR': 9, 'EC': 8, 'LV': 8, 'PR': 8, 'PA': 7, 'DO': 7, 'GT': 7, 'NP': 6,
+                'DZ': 6, 'UY': 6, 'CY': 6, 'BS': 6, 'MV': 6, 'BZ': 5, 'BH': 5, 'MD': 5, 'IQ': 5,
+                'OM': 4, 'GH': 4, 'MU': 4, 'SD': 4, 'MO': 4, 'NI': 4, 'KH': 4, 'MZ': 4, 'BY': 4,
+                'GU': 3, 'PY': 3, 'AZ': 3, 'ET': 3, 'PS': 3, 'KZ': 3, 'ME': 3, 'KE': 3, 'MT': 3,
+                'BB': 3, 'BO': 3, 'SC': 3, 'SY': 3, 'GY': 2, 'JE': 2, 'MN': 2, 'FO': 2, 'TZ': 2,
+                'TN': 2, 'GG': 2, 'BW': 2, 'AO': 2, 'XK': 1, 'RE': 1, 'CW': 1, 'TG': 1, 'SN': 1,
+                'LA': 1, 'ZW': 1, 'HN': 1, 'SR': 1, 'TJ': 1, 'VU': 1, 'AW': 1, 'KY': 1, 'LU': 1,
+                'UZ': 1, 'AM': 1, 'AF': 1, 'IM': 1, 'VC': 1,
+                // Yeni eklenen ülkeler
+                'AD': 0, 'AG': 0, 'AI': 0, 'AS': 0, 'AX': 0, 'BF': 0, 'BI': 0, 'BJ': 0, 'BM': 0,
+                'BQ': 0, 'BT': 0, 'BV': 0, 'CC': 0, 'CD': 0, 'CF': 0, 'CG': 0, 'CI': 0, 'CK': 0,
+                'CM': 0, 'CV': 0, 'DJ': 0, 'DM': 0, 'ER': 0, 'FJ': 0, 'FM': 0, 'GA': 0, 'GM': 0,
+                'GN': 0, 'GQ': 0, 'HT': 0, 'KI': 0, 'KM': 0, 'KN': 0, 'LC': 0, 'LI': 0, 'LR': 0,
+                'LS': 0, 'MG': 0, 'ML': 0, 'MR': 0, 'MS': 0, 'NA': 0, 'NE': 0, 'NF': 0, 'NR': 0,
+                'PG': 0, 'PF': 0, 'PM': 0, 'PN': 0, 'RW': 0, 'SB': 0, 'SH': 0, 'SL': 0, 'SM': 0,
+                'SO': 0, 'SS': 0, 'ST': 0, 'SZ': 0, 'TD': 0, 'TF': 0, 'TK': 0, 'TL': 0, 'TM': 0,
+                'TO': 0, 'TV': 0, 'WF': 0, 'WS': 0, 'YE': 0, 'ZM': 0
+            };
+
+            // Haritayı oluştur
+            var chart = echarts.init(document.getElementById('vmap'));
+            
+            var option = {
+                backgroundColor: '#F5F5F5',
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function(params) {
+                        return params.name + ': ' + (params.value || 0) + ' katılımcı';
+                    }
+                },
+                visualMap: {
+                    min: 0,
+                    max: 22000,
+                    text: ['Yüksek', 'Düşük'],
+                    realtime: false,
+                    calculable: true,
+                    inRange: {
+                        color: ['#FFFFFF', '#FFB6C1', '#FF6B6B', '#FF0000', '#8B0000']
+                    }
+                },
+                series: [{
+                    name: 'Katılımcı Sayısı',
+                    type: 'map',
+                    map: 'world',
+                    roam: true,
+                    emphasis: {
+                        label: {
+                            show: true
+                        }
+                    },
+                    itemStyle: {
+                        areaColor: '#FFFFFF',
+                        borderColor: '#CCCCCC',
+                        borderWidth: 1
+                    },
+                    data: Object.keys(countryData).map(function(key) {
+                        return {
+                            name: key,
+                            value: countryData[key],
+                            itemStyle: {
+                                areaColor: countryData[key] <= 50 ? '#FFB6C1' :
+                                          countryData[key] <= 449 ? '#FF6B6B' :
+                                          countryData[key] <= 1199 ? '#FF0000' :
+                                          '#8B0000',
+                                borderColor: '#CCCCCC',
+                                borderWidth: 1
+                            }
+                        };
+                    })
+                }]
+            };
+
+            chart.setOption(option);
+
+            // Pencere boyutu değiştiğinde haritayı yeniden boyutlandır
+            window.addEventListener('resize', function() {
+                chart.resize();
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
+    <script src="assets/js/vmap.sampledata.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js"></script>
+    <script src="assets/js/init/vector-init.js"></script>
+
+</body>
+</html>
