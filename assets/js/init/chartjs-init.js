@@ -273,36 +273,135 @@
 
     //radar chart
     var ctx = document.getElementById( "radarChart" );
-    ctx.height = 160;
+    ctx.height = 200;
+    
+    // Soru çevirileri
+    const soruCevirileri = {
+        "Q1A": "Kendimi önemsiz şeylerden dolayı üzgün buldum.",
+        "Q2A": "Ağzımın kuruluğunun farkındaydım.",
+        "Q3A": "Hiçbir olumlu duygu yaşayamıyormuş gibiydim.",
+        "Q4A": "Nefes almada zorluk yaşadım (örn. aşırı hızlı nefes alma, fiziksel efor olmadan nefes darlığı).",
+        "Q5A": "Bir türlü harekete geçemiyormuş gibiydim.",
+        "Q6A": "Durumlara aşırı tepki verme eğilimindeydim.",
+        "Q7A": "Titreme hissi yaşadım (örn. bacaklarımın güçsüzleşmesi).",
+        "Q8A": "Rahatlamakta zorlandım.",
+        "Q9A": "Kendimi o kadar endişeli hissettiğim durumlarda buldum ki, bu durumlar bittiğinde büyük rahatlama hissettim.",
+        "Q10A": "İleriye dönük hiçbir şeyim olmadığını hissettim.",
+        "Q11A": "Kendimi oldukça kolay üzülür buldum.",
+        "Q12A": "Çok fazla sinir enerjisi kullandığımı hissettim.",
+        "Q13A": "Kendimi üzgün ve depresif hissettim.",
+        "Q14A": "Herhangi bir şekilde geciktiğimde sabırsızlandım (örn. asansörler, trafik ışıkları, bekletilme).",
+        "Q15A": "Bayılma hissi yaşadım.",
+        "Q16A": "Neredeyse her şeye karşı ilgimi kaybettiğimi hissettim.",
+        "Q17A": "Kendimi değersiz bir kişi olarak hissettim.",
+        "Q18A": "Kendimi oldukça alıngan hissettim.",
+        "Q19A": "Yüksek sıcaklık veya fiziksel efor olmadan belirgin şekilde terledim (örn. ellerin terlemesi).",
+        "Q20A": "İyi bir neden olmadan korkmuş hissettim.",
+        "Q21A": "Yaşamın değmez olduğunu hissettim.",
+        "Q22A": "Rahatlamakta zorlandım.",
+        "Q23A": "Yutkunmakta zorluk yaşadım.",
+        "Q24A": "Yaptığım şeylerden hiçbir zevk alamıyormuş gibiydim.",
+        "Q25A": "Fiziksel efor olmadan kalbimin atışının farkındaydım (örn. kalp atış hızının artması, kalbin bir atışı atlaması).",
+        "Q26A": "Kendimi üzgün ve mavi hissettim.",
+        "Q27A": "Kendimi çok sinirli buldum.",
+        "Q28A": "Panik olmak üzere olduğumu hissettim.",
+        "Q29A": "Beni üzen bir şeyden sonra sakinleşmekte zorlandım.",
+        "Q30A": "Önemsiz ama tanıdık olmayan bir görev tarafından 'alt edileceğim' korkusunu yaşadım.",
+        "Q31A": "Hiçbir şey hakkında hevesli olamadım.",
+        "Q32A": "Yaptığım şeye yapılan kesintilere tahammül etmekte zorlandım.",
+        "Q33A": "Sinir gerginliği içindeydim.",
+        "Q34A": "Kendimi oldukça değersiz hissettim.",
+        "Q35A": "Yaptığım işe devam etmemi engelleyen herhangi bir şeye tahammül edemedim.",
+        "Q36A": "Kendimi dehşete düşmüş hissettim.",
+        "Q37A": "Gelecekte umut verici hiçbir şey göremedim.",
+        "Q38A": "Yaşamın anlamsız olduğunu hissettim.",
+        "Q39A": "Kendimi huzursuz buldum.",
+        "Q40A": "Panik yapıp kendimi aptal durumuna düşürebileceğim durumlar hakkında endişelendim.",
+        "Q41A": "Titreme yaşadım (örn. ellerde).",
+        "Q42A": "İşleri yapmak için inisiyatif almakta zorlandım."
+    };
+
     var myChart = new Chart( ctx, {
         type: 'radar',
         data: {
-            labels: [ [ "Eating", "Dinner" ], [ "Drinking", "Water" ], "Sleeping", [ "Designing", "Graphics" ], "Coding", "Cycling", "Running" ],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    data: [ 65, 70, 66, 45, 5, 55, 40 ],
-                    borderColor: "rgba(0, 194, 146, 0.6)",
-                    borderWidth: "1",
-                    backgroundColor: "rgba(0, 194, 146, 0.4)"
-                            },
-                {
-                    label: "My Second dataset",
-                    data: [ 28, 5, 55, 19, 63, 27, 68 ],
-                    borderColor: "rgba(0, 194, 146, 0.7",
-                    borderWidth: "1",
-                    backgroundColor: "rgba(0, 194, 146, 0.5)"
-                            }
-                        ]
+            labels: [ "Q1A", "Q2A", "Q3A", "Q4A", "Q5A", "Q6A", "Q7A", "Q8A", "Q9A", "Q10A",
+                     "Q11A", "Q12A", "Q13A", "Q14A", "Q15A", "Q16A", "Q17A", "Q18A", "Q19A", "Q20A",
+                     "Q21A", "Q22A", "Q23A", "Q24A", "Q25A", "Q26A", "Q27A", "Q28A", "Q29A", "Q30A",
+                     "Q31A", "Q32A", "Q33A", "Q34A", "Q35A", "Q36A", "Q37A", "Q38A", "Q39A", "Q40A",
+                     "Q41A", "Q42A" ],
+            datasets: [ {
+                label: "Soru Tekrar Sayıları",
+                data: [ 13320, 14385, 14062, 17757, 12794, 13291, 18092, 13471, 11788, 11007,
+                       13598, 12601, 13922, 12535, 19587, 11696, 13509, 12789, 18506, 11946,
+                       12694, 14327, 25111, 13790, 13569, 11979, 12889, 12734, 12280, 12535,
+                       14022, 14441, 13146, 13064, 15373, 12517, 11580, 12551, 14405, 12219,
+                       17323, 12886 ],
+                borderColor: "rgba(0, 194, 146, 0.6)",
+                borderWidth: "1",
+                backgroundColor: "rgba(0, 194, 146, 0.4)"
+            }]
         },
         options: {
             legend: {
-                position: 'top'
+                position: 'top',
+                labels: {
+                    fontFamily: 'Montserrat',
+                    fontSize: 12
+                }
             },
             scale: {
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    fontFamily: 'Montserrat',
+                    fontSize: 11
+                },
+                pointLabels: {
+                    fontFamily: 'Montserrat',
+                    fontSize: 11,
+                    callback: function(label, index) {
+                        return label;
+                    }
                 }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return "Tekrar Sayısı: " + data.datasets[0].data[tooltipItem.index];
+                    },
+                    title: function(tooltipItem, data) {
+                        return data.labels[tooltipItem[0].index] + " - Soru Detayı";
+                    }
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                borderColor: 'rgba(0, 194, 146, 0.6)',
+                borderWidth: 1,
+                displayColors: false
+            },
+            onClick: function(evt, elements) {
+                if (elements && elements.length > 0) {
+                    var index = elements[0]._index;
+                    var label = this.data.labels[index];
+                    var value = this.data.datasets[0].data[index];
+                    
+                    Swal.fire({
+                        title: label,
+                        html: `
+                            <div class="text-left">
+                                <p><strong>Soru Kodu:</strong> ${label}</p>
+                                <p><strong>Tekrar Sayısı:</strong> ${value}</p>
+                                <p><strong>Soru İçeriği:</strong> ${soruCevirileri[label]}</p>
+                            </div>
+                        `,
+                        icon: 'info',
+                        confirmButtonText: 'Kapat',
+                        confirmButtonColor: '#00c292'
+                    });
+                }
+            },
+            onHover: function(evt, elements) {
+                evt.target.style.cursor = elements[0] ? 'pointer' : 'default';
             }
         }
     });
@@ -406,28 +505,63 @@
 
     // single bar chart
     var ctx = document.getElementById( "singelBarChart" );
-    ctx.height = 150;
+    ctx.height = 300;
     var myChart = new Chart( ctx, {
         type: 'bar',
         data: {
-            labels: [ "Sun", "Mon", "Tu", "Wed", "Th", "Fri", "Sat" ],
+            labels: [ "İlkokul", "Ortaokul", "Lise", "Üniversite" ],
             datasets: [
                 {
-                    label: "My First dataset",
-                    data: [ 55, 50, 75, 80, 56, 55, 60 ],
+                    label: "Ortalama Stres Skoru",
+                    data: [ 31.05, 29.26, 27.66, 26.40 ],
                     borderColor: "rgba(0, 194, 146, 0.9)",
                     borderWidth: "0",
                     backgroundColor: "rgba(0, 194, 146, 0.5)"
-                            }
-                        ]
+                }
+            ]
         },
         options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontFamily: 'Montserrat',
+                    fontSize: 12
+                }
+            },
             scales: {
-                yAxes: [ {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    },
                     ticks: {
-                        beginAtZero: true
+                        fontFamily: 'Montserrat',
+                        fontSize: 11,
+                        maxRotation: 45,
+                        minRotation: 45
                     }
-                                } ]
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: true,
+                        drawBorder: false,
+                        color: 'rgba(0,0,0,0.1)'
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        fontFamily: 'Montserrat',
+                        fontSize: 11
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Stres Skoru',
+                        fontFamily: 'Montserrat',
+                        fontSize: 12
+                    }
+                }]
             }
         }
     } );

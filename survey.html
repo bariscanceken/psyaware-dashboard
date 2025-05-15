@@ -1,0 +1,751 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PsyAware - Anket</title>
+    <meta name="description" content="PsyAware - Anket">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="shortcut icon" href="images/logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Left Panel -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Gösterge Paneli</a>
+                    </li>
+                    <li class="menu-title">Arayüz Öğeleri</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tablolar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basit Tablolar</a></li>
+                            <li><i class="fa fa-table"></i><a href="tables-data.html">Veri Tabloları</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children active dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Formlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basit Formlar</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Gelişmiş Formlar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title">İkonlar</li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>İkonlar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Mükemmel İkonlar</a></li>
+                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themify İkonları</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widget'lar</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Grafikler</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">JS Grafikleri</a></li>
+                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Grafik</a></li>
+                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Grafik</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="active">
+                        <a href="survey.html"> <i class="menu-icon fa fa-clipboard"></i>Ankete Katıl</a>
+                    </li>
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Haritalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Haritalar</a></li>
+                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vektör Haritalar</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">Ekstralar</li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Sayfalar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Giriş</a></li>
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Kayıt Ol</a></li>
+                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Şifremi Unuttum</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        <div class="form-inline">
+                            <form class="search-form">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Psikolojik Değerlendirme Anketi</strong>
+                            </div>
+                            <div class="card-body card-block">
+                                <div class="alert alert-info">
+                                    <p>Bu veri, Depression Anxiety Stress Scales (DASS) çevrimiçi versiyonu ile toplanmıştır. Daha fazla bilgi için: <a href="http://www2.psy.unsw.edu.au/dass/" target="_blank">http://www2.psy.unsw.edu.au/dass/</a></p>
+                                    <p>Bu anket 2017-2019 yılları arasında toplanmıştır. Her soru için son bir hafta içinde ne sıklıkla bu durumun sizin için geçerli olduğunu belirtmeniz istenmektedir:</p>
+                                    <ul>
+                                        <li>1 = Hiç uygulanmadı</li>
+                                        <li>2 = Biraz veya bazen uygulandı</li>
+                                        <li>3 = Oldukça veya sıklıkla uygulandı</li>
+                                        <li>4 = Çok fazla veya çoğu zaman uygulandı</li>
+                                    </ul>
+                                </div>
+                                <form id="surveyForm" class="form-horizontal">
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Yaş</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="number" name="age" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Cinsiyet</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="gender" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="male">Erkek</option>
+                                                <option value="female">Kadın</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Eğitim Seviyesi</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="education" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">İlköğretim</option>
+                                                <option value="2">Ortaokul</option>
+                                                <option value="3">Lise</option>
+                                                <option value="4">Üniversite</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Çocukluk Dönemi Yaşam Alanı</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="urban" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Kırsal (köy)</option>
+                                                <option value="2">Kasaba</option>
+                                                <option value="3">Şehir</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Din</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="religion" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Agnostik</option>
+                                                <option value="2">Ateist</option>
+                                                <option value="3">Budist</option>
+                                                <option value="4">Hristiyan (Katolik)</option>
+                                                <option value="5">Hristiyan (Mormon)</option>
+                                                <option value="6">Hristiyan (Protestan)</option>
+                                                <option value="7">Hristiyan (Diğer)</option>
+                                                <option value="8">Hindu</option>
+                                                <option value="9">Yahudi</option>
+                                                <option value="10">Müslüman</option>
+                                                <option value="11">Sih</option>
+                                                <option value="12">Diğer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Cinsel Yönelim</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="orientation" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Heteroseksüel</option>
+                                                <option value="2">Biseksüel</option>
+                                                <option value="3">Homoseksüel</option>
+                                                <option value="4">Aseksüel</option>
+                                                <option value="5">Diğer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Irk</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="race" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="10">Asyalı</option>
+                                                <option value="20">Arap</option>
+                                                <option value="30">Siyah</option>
+                                                <option value="40">Yerli Avustralyalı</option>
+                                                <option value="50">Yerli Amerikalı</option>
+                                                <option value="60">Beyaz</option>
+                                                <option value="70">Diğer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Evlilik Durumu</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="married" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Hiç evlenmedi</option>
+                                                <option value="2">Evli</option>
+                                                <option value="3">Daha önce evlendi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Aile Büyüklüğü</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="number" name="familysize" class="form-control" required>
+                                            <small class="form-text text-muted">Sizin de dahil olduğunuz, annenizin sahip olduğu çocuk sayısı</small>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Bölüm</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="text" name="major" class="form-control">
+                                            <small class="form-text text-muted">Eğer üniversiteye gittinizse, bölümünüz (örn. "psikoloji", "İngilizce", "inşaat mühendisliği")</small>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Yazı Eliniz</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="hand" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Sağ</option>
+                                                <option value="2">Sol</option>
+                                                <option value="3">Her ikisi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3">
+                                            <label class="form-control-label">Son Bir Yılda Oy Kullandınız mı?</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="voted" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="1">Evet</option>
+                                                <option value="2">Hayır</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-header">
+                                        <strong>Kişilik Envanteri</strong>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <p>Aşağıdaki ifadelerin her biri için, sizin için ne kadar doğru olduğunu belirtin:</p>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Dışa dönük, sosyal ve enerjik</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="5">
+                                                <label class="form-check-label">Biraz katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI1" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Eleştirel ve tartışmacı</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="5">
+                                                <label class="form-check-label">Biraz katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI2" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Güvenilir ve düzenli</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI3" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Endişeli ve duygusal</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="5">
+                                                <label class="form-check-label">Biraz katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI4" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Yenilikçi ve yaratıcı</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="5">
+                                                <label class="form-check-label">Biraz katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI5" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>İçe dönük ve sessiz</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI6" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Yardımsever ve anlayışlı</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI7" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Düzensiz ve dağınık</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI8" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Sakin ve dengeli</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI9" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <p class="mb-3"><strong>Geleneksel ve tutucu</strong></p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="1" required>
+                                                <label class="form-check-label">Kesinlikle katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="2">
+                                                <label class="form-check-label">Katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="3">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="4">
+                                                <label class="form-check-label">Ne katılıyorum ne katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="5">
+                                                <label class="form-check-label">Biraz katılmıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="6">
+                                                <label class="form-check-label">Katılıyorum</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="TIPI10" value="7">
+                                                <label class="form-check-label">Kesinlikle katılıyorum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-header">
+                                        <strong>Kelime Bilgisi</strong>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <p>Aşağıdaki listede, tanımlarını kesin olarak bildiğiniz kelimeleri işaretleyin:</p>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL1" value="1">
+                                                <label class="form-check-label">tekne</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL2" value="1">
+                                                <label class="form-check-label">tutarsız</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL3" value="1">
+                                                <label class="form-check-label">soluk</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL4" value="1">
+                                                <label class="form-check-label">robot</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL5" value="1">
+                                                <label class="form-check-label">işitilebilir</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL6" value="1">
+                                                <label class="form-check-label">belirsiz</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL7" value="1">
+                                                <label class="form-check-label">azlık</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL8" value="1">
+                                                <label class="form-check-label">bilgi kuramı</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL9" value="1">
+                                                <label class="form-check-label">karmaşık</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL10" value="1">
+                                                <label class="form-check-label">karar vermek</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL11" value="1">
+                                                <label class="form-check-label">kolaj</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL12" value="1">
+                                                <label class="form-check-label">verdid</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL13" value="1">
+                                                <label class="form-check-label">berbat</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL14" value="1">
+                                                <label class="form-check-label">açık</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL15" value="1">
+                                                <label class="form-check-label">ihanet etmek</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="VCL16" value="1">
+                                                <label class="form-check-label">komik</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="questionsContainer">
+                                        <!-- Sorular JavaScript ile eklenecek -->
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i> Gönder
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-inner bg-white">
+                <div class="row">
+                    <div class="col-sm-6">
+                        Telif Hakkı &copy; 2024 PsyAware
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        Designed by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/survey.js"></script>
+</body>
+</html> 
