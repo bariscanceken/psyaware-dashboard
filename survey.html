@@ -20,6 +20,46 @@
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        .submit-container {
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 300px;
+            text-align: center;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            transition: all 0.3s ease;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-success:active {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn-success:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+        }
+    </style>
 </head>
 
 <body>
@@ -33,62 +73,48 @@
                     </li>
                     <li class="menu-title">Arayüz Öğeleri</li>
 
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tablolar</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basit Tablolar</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Veri Tabloları</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children active dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Formlar</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basit Formlar</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Gelişmiş Formlar</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="menu-title">İkonlar</li>
-
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>İkonlar</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Mükemmel İkonlar</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themify İkonları</a></li>
-                        </ul>
+                    <li>
+                        <a href="tables-data.html">
+                            <i class="menu-icon fa fa-table"></i>Data Table
+                        </a>
                     </li>
                     <li>
-                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widget'lar</a>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Grafikler</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">JS Grafikleri</a></li>
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Grafik</a></li>
-                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Grafik</a></li>
-                        </ul>
+                        <a href="forms-join.html">
+                            <i class="menu-icon fa fa-user-plus"></i>Bize Katılın
+                        </a>
                     </li>
 
-                    <li class="active">
+                    <li>
+                        <a href="forms-basic.html">
+                            <i class="menu-icon fa fa-heart"></i>Bağış Yap
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="charts-chartjs.html">
+                            <i class="menu-icon fa fa-bar-chart"></i>Grafikler
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="survey.html"> <i class="menu-icon fa fa-clipboard"></i>Ankete Katıl</a>
                     </li>
 
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Haritalar</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Haritalar</a></li>
-                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vektör Haritalar</a></li>
-                        </ul>
+                    <li class="menu-title">Üyelİk İşlemlerİ</li>
+
+                    <li>
+                        <a href="page-login.html">
+                            <i class="menu-icon fa fa-sign-in"></i>Giriş
+                        </a>
                     </li>
-                    <li class="menu-title">Ekstralar</li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Sayfalar</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Giriş</a></li>
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Kayıt Ol</a></li>
-                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Şifremi Unuttum</a></li>
-                        </ul>
+
+                    <li>
+                        <a href="page-register.html">
+                            <i class="menu-icon fa fa-user-plus"></i>Kayıt Ol
+                        </a>
                     </li>
+
                 </ul>
             </div>
         </nav>
@@ -711,10 +737,12 @@
                                     <div id="questionsContainer">
                                         <!-- Sorular JavaScript ile eklenecek -->
                                     </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="fa fa-dot-circle-o"></i> Gönder
-                                        </button>
+                                    <div class="card-footer text-center">
+                                        <div class="submit-container">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa fa-paper-plane"></i> Gönder
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
