@@ -1,102 +1,13 @@
-( function ( $ ) {
+(function($) {
     "use strict";
 
-    //Team chart
-    var ctx = document.getElementById( "team-chart" );
-    ctx.height = 150;
-    var myChart = new Chart( ctx, {
-        type: 'line',
-        data: {
-            labels: [ "2012", "2013", "2014", "2015", "2016", "2017", "2018" ],
-            type: 'line',
-            defaultFontFamily: 'Montserrat',
-            datasets: [ {
-                data: [ 0, 7, 3, 5, 2, 8, 6 ],
-                label: "Expense",
-                backgroundColor: 'rgba(0,200,155,.35)',
-                borderColor: 'rgba(0,200,155,0.60)',
-                borderWidth: 3.5,
-                pointStyle: 'circle',
-                pointRadius: 5,
-                pointBorderColor: 'transparent',
-                pointBackgroundColor: 'rgba(0,200,155,0.60)',
-                    },
-                    {
-                data: [ 0, 6, 3, 4, 3, 7, 10 ],
-                label: "Profit",
-                backgroundColor: 'rgba(0,194,146,.25)',
-                borderColor: 'rgba(0,194,146,0.5)',
-                borderWidth: 3.5,
-                pointStyle: 'circle',
-                pointRadius: 5,
-                pointBorderColor: 'transparent',
-                pointBackgroundColor: 'rgba(0,194,146,0.5)',
-                    }, ]
-        },
-        options: {
-            responsive: true,
-            tooltips: {
-                mode: 'index',
-                titleFontSize: 12,
-                titleFontColor: '#000',
-                bodyFontColor: '#000',
-                backgroundColor: '#fff',
-                titleFontFamily: 'Montserrat',
-                bodyFontFamily: 'Montserrat',
-                cornerRadius: 3,
-                intersect: false,
-            },
-            legend: {
-                display: false,
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    fontFamily: 'Montserrat',
-                },
-
-
-            },
-            scales: {
-                xAxes: [ {
-                    display: true,
-                    gridLines: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    scaleLabel: {
-                        display: false,
-                        labelString: 'Month'
-                    }
-                        } ],
-                yAxes: [ {
-                    display: true,
-                    gridLines: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Value'
-                    }
-                        } ]
-            },
-            title: {
-                display: false,
-            }
-        }
-    } );
-
-
-    //Sales chart
-    var ctx = document.getElementById( "sales-chart" );
-    ctx.height = 300;
-    var myChart = new Chart( ctx, {
+    // Yaşa Göre Depresyon Oranları
+    var ctx = document.getElementById('sales-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ["13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "79", "80", "82", "89"],
-            type: 'line',
-            defaultFontFamily: 'Montserrat',
-            datasets: [ {
+            datasets: [{
                 label: "Kadınlarda Depresyon Seviyesi",
                 data: [40.949495, 40.554795, 39.375820, 38.693699, 37.510006, 35.952401, 35.151482, 35.251521, 34.649645, 34.811955, 35.135704, 34.719346, 34.691433, 34.363537, 33.700521, 34.489028, 32.068136, 32.051454, 31.133956, 31.693750, 31.252669, 31.097778, 33.439614, 29.919255, 31.768212, 31.151899, 31.439024, 30.936170, 30.578313, 30.724138, 32.750000, 31.687500, 29.607843, 31.012987, 31.782609, 30.039474, 30.732143, 32.310811, 30.717391, 28.125000, 32.276596, 29.840909, 32.081081, 29.787879, 32.810811, 31.424242, 35.550000, 31.208333, 29.857143, 25.000000, 36.153846, 26.733333, 33.733333, 28.375000, 31.666667, 29.000000, 28.000000, 42.000000, 33.600000, 28.142857, 38.000000, 24.000000, 55.000000, 14.666667, 37.000000, 34.500000, 30.500000, 31.000000],
                 backgroundColor: 'transparent',
@@ -121,48 +32,28 @@
         },
         options: {
             responsive: true,
-            tooltips: {
-                mode: 'index',
-                titleFontSize: 12,
-                titleFontColor: '#000',
-                bodyFontColor: '#000',
-                backgroundColor: '#fff',
-                titleFontFamily: 'Montserrat',
-                bodyFontFamily: 'Montserrat',
-                cornerRadius: 3,
-                intersect: false,
-            },
             legend: {
                 display: true,
                 position: 'top',
                 labels: {
-                    usePointStyle: true,
                     fontFamily: 'Montserrat',
-                    padding: 20,
-                    boxWidth: 10
-                },
+                    fontSize: 12
+                }
             },
             scales: {
-                xAxes: [ {
+                xAxes: [{
                     display: true,
                     gridLines: {
                         display: true,
                         drawBorder: false,
                         color: 'rgba(0,0,0,0.1)'
                     },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Yaş',
-                        fontFamily: 'Montserrat',
-                        fontSize: 12
-                    },
                     ticks: {
                         fontFamily: 'Montserrat',
-                        fontSize: 11,
-                        maxTicksLimit: 10
+                        fontSize: 11
                     }
                 }],
-                yAxes: [ {
+                yAxes: [{
                     display: true,
                     gridLines: {
                         display: true,
@@ -183,97 +74,73 @@
                         fontSize: 11
                     }
                 }]
-            },
-            title: {
-                display: false
             }
         }
-    } );
+    });
 
-
-
-
-
-
-
-    //line chart
-    var ctx = document.getElementById( "lineChart" );
-    ctx.height = 150;
-    var myChart = new Chart( ctx, {
-        type: 'line',
+    // Eğitim Seviyesine Göre Ortalama Stres Skoru
+    var ctx = document.getElementById("singelBarChart");
+    ctx.height = 300;
+    var myChart = new Chart(ctx, {
+        type: 'bar',
         data: {
-            labels: [ "January", "February", "March", "April", "May", "June", "July" ],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    borderColor: "rgba(0,0,0,.09)",
-                    borderWidth: "1",
-                    backgroundColor: "rgba(0,0,0,.07)",
-                    data: [ 20, 47, 35, 43, 65, 45, 35 ]
-                            },
-                {
-                    label: "My Second dataset",
-                    borderColor: "rgba(0, 194, 146, 0.9)",
-                    borderWidth: "1",
-                    backgroundColor: "rgba(0, 194, 146, 0.5)",
-                    pointHighlightStroke: "rgba(26,179,148,1)",
-                    data: [ 16, 32, 18, 27, 42, 33, 44 ]
-                            }
-                        ]
+            labels: ["İlkokul", "Ortaokul", "Lise", "Üniversite"],
+            datasets: [{
+                label: "Ortalama Stres Skoru",
+                data: [31.05, 29.26, 27.66, 26.40],
+                borderColor: "rgba(0, 194, 146, 0.9)",
+                borderWidth: "0",
+                backgroundColor: "rgba(0, 194, 146, 0.5)"
+            }]
         },
         options: {
             responsive: true,
-            tooltips: {
-                mode: 'index',
-                intersect: false
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontFamily: 'Montserrat',
+                    fontSize: 12
+                }
             },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            }
-
-        }
-    } );
-
-
-    //bar chart
-    var ctx = document.getElementById( "barChart" );
-    //    ctx.height = 200;
-    var myChart = new Chart( ctx, {
-        type: 'bar',
-        data: {
-            labels: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    data: [ 65, 59, 80, 81, 56, 55, 45 ],
-                    borderColor: "rgba(0, 194, 146, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 194, 146, 0.5)"
-                            },
-                {
-                    label: "My Second dataset",
-                    data: [ 28, 48, 40, 19, 86, 27, 76 ],
-                    borderColor: "rgba(0,0,0,0.09)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0,0,0,0.07)"
-                            }
-                        ]
-        },
-        options: {
             scales: {
-                yAxes: [ {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    },
                     ticks: {
-                        beginAtZero: true
+                        fontFamily: 'Montserrat',
+                        fontSize: 11,
+                        maxRotation: 45,
+                        minRotation: 45
                     }
-                                } ]
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: true,
+                        drawBorder: false,
+                        color: 'rgba(0,0,0,0.1)'
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        fontFamily: 'Montserrat',
+                        fontSize: 11
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Stres Skoru',
+                        fontFamily: 'Montserrat',
+                        fontSize: 12
+                    }
+                }]
             }
         }
-    } );
+    });
 
-    //radar chart
-    var ctx = document.getElementById( "radarChart" );
-    ctx.height = 200;
+    // En Çok Aynı Cevabı Alan Sorular
+    var ctx = document.getElementById("radarChart");
     
     // Soru çevirileri
     const soruCevirileri = {
@@ -321,28 +188,30 @@
         "Q42A": "İşleri yapmak için inisiyatif almakta zorlandım."
     };
 
-    var myChart = new Chart( ctx, {
+    var myChart = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: [ "Q1A", "Q2A", "Q3A", "Q4A", "Q5A", "Q6A", "Q7A", "Q8A", "Q9A", "Q10A",
-                     "Q11A", "Q12A", "Q13A", "Q14A", "Q15A", "Q16A", "Q17A", "Q18A", "Q19A", "Q20A",
-                     "Q21A", "Q22A", "Q23A", "Q24A", "Q25A", "Q26A", "Q27A", "Q28A", "Q29A", "Q30A",
-                     "Q31A", "Q32A", "Q33A", "Q34A", "Q35A", "Q36A", "Q37A", "Q38A", "Q39A", "Q40A",
-                     "Q41A", "Q42A" ],
-            datasets: [ {
+            labels: ["Q1A", "Q2A", "Q3A", "Q4A", "Q5A", "Q6A", "Q7A", "Q8A", "Q9A", "Q10A",
+                    "Q11A", "Q12A", "Q13A", "Q14A", "Q15A", "Q16A", "Q17A", "Q18A", "Q19A", "Q20A",
+                    "Q21A", "Q22A", "Q23A", "Q24A", "Q25A", "Q26A", "Q27A", "Q28A", "Q29A", "Q30A",
+                    "Q31A", "Q32A", "Q33A", "Q34A", "Q35A", "Q36A", "Q37A", "Q38A", "Q39A", "Q40A",
+                    "Q41A", "Q42A"],
+            datasets: [{
                 label: "Soru Tekrar Sayıları",
-                data: [ 13320, 14385, 14062, 17757, 12794, 13291, 18092, 13471, 11788, 11007,
+                data: [13320, 14385, 14062, 17757, 12794, 13291, 18092, 13471, 11788, 11007,
                        13598, 12601, 13922, 12535, 19587, 11696, 13509, 12789, 18506, 11946,
                        12694, 14327, 25111, 13790, 13569, 11979, 12889, 12734, 12280, 12535,
                        14022, 14441, 13146, 13064, 15373, 12517, 11580, 12551, 14405, 12219,
-                       17323, 12886 ],
+                       17323, 12886],
                 borderColor: "rgba(0, 194, 146, 0.6)",
                 borderWidth: "1",
                 backgroundColor: "rgba(0, 194, 146, 0.4)"
             }]
         },
         options: {
+            responsive: true,
             legend: {
+                display: true,
                 position: 'top',
                 labels: {
                     fontFamily: 'Montserrat',
@@ -406,167 +275,4 @@
         }
     });
 
-
-    //pie chart
-    var ctx = document.getElementById( "pieChart" );
-    ctx.height = 300;
-    var myChart = new Chart( ctx, {
-        type: 'pie',
-        data: {
-            datasets: [ {
-                data: [ 45, 25, 20, 10 ],
-                backgroundColor: [
-                                    "rgba(0, 194, 146,0.9)",
-                                    "rgba(0, 194, 146,0.7)",
-                                    "rgba(0, 194, 146,0.5)",
-                                    "rgba(0,0,0,0.07)"
-                                ],
-                hoverBackgroundColor: [
-                                    "rgba(0, 194, 146,0.9)",
-                                    "rgba(0, 194, 146,0.7)",
-                                    "rgba(0, 194, 146,0.5)",
-                                    "rgba(0,0,0,0.07)"
-                                ]
-
-                            } ],
-            labels: [
-                            "green",
-                            "green",
-                            "green"
-                        ]
-        },
-        options: {
-            responsive: true
-        }
-    } );
-
-    //doughut chart
-    var ctx = document.getElementById( "doughutChart" );
-    ctx.height = 150;
-    var myChart = new Chart( ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [ {
-                data: [ 35, 40, 20, 5 ],
-                backgroundColor: [
-                                    "rgba(0, 194, 146,0.9)",
-                                    "rgba(0, 194, 146,0.7)",
-                                    "rgba(0, 194, 146,0.5)",
-                                    "rgba(0,0,0,0.07)"
-                                ],
-                hoverBackgroundColor: [
-                                    "rgba(0, 194, 146,0.9)",
-                                    "rgba(0, 194, 146,0.7)",
-                                    "rgba(0, 194, 146,0.5)",
-                                    "rgba(0,0,0,0.07)"
-                                ]
-
-                            } ],
-            labels: [
-                            "green",
-                            "green",
-                            "green",
-                            "green"
-                        ]
-        },
-        options: {
-            responsive: true
-        }
-    } );
-
-    //polar chart
-    var ctx = document.getElementById( "polarChart" );
-    ctx.height = 150;
-    var myChart = new Chart( ctx, {
-        type: 'polarArea',
-        data: {
-            datasets: [ {
-                data: [ 15, 18, 10, 7, 19],
-                backgroundColor: [
-                                    "rgba(0, 194, 146,0.9)",
-                                    "rgba(0, 194, 146,0.8)",
-                                    "rgba(0, 194, 146,0.7)",
-                                    "rgba(0,0,0,0.2)",
-                                    "rgba(0, 194, 146,0.5)"
-                                ]
-
-                            } ],
-            labels: [
-                            "green",
-                            "green",
-                            "green",
-                            "green"
-                        ]
-        },
-        options: {
-            responsive: true
-        }
-    } );
-
-    // single bar chart
-    var ctx = document.getElementById( "singelBarChart" );
-    ctx.height = 300;
-    var myChart = new Chart( ctx, {
-        type: 'bar',
-        data: {
-            labels: [ "İlkokul", "Ortaokul", "Lise", "Üniversite" ],
-            datasets: [
-                {
-                    label: "Ortalama Stres Skoru",
-                    data: [ 31.05, 29.26, 27.66, 26.40 ],
-                    borderColor: "rgba(0, 194, 146, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 194, 146, 0.5)"
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    fontFamily: 'Montserrat',
-                    fontSize: 12
-                }
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    },
-                    ticks: {
-                        fontFamily: 'Montserrat',
-                        fontSize: 11,
-                        maxRotation: 45,
-                        minRotation: 45
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: true,
-                        drawBorder: false,
-                        color: 'rgba(0,0,0,0.1)'
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        fontFamily: 'Montserrat',
-                        fontSize: 11
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Stres Skoru',
-                        fontFamily: 'Montserrat',
-                        fontSize: 12
-                    }
-                }]
-            }
-        }
-    } );
-
-
-
-
-} )( jQuery );
+})(jQuery); 

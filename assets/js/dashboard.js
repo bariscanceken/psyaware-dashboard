@@ -1,514 +1,184 @@
 ( function ( $ ) {
   "use strict";
 
- // Flot Charts
-
- $.plot("#flotBar1", [{
-  data: [[0, 3], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6]],
-  bars: {
-    show: true,
-    lineWidth: 0,
-    fillColor: '#85c988'          
-  }
-}], {
-  grid: {
-    show: false,
-    hoverable: true
-  }
-});
-
-
- $.plot("#flotBar2", [{
-  data: [[0, 3], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6]],
-  bars: {
-    show: true,
-    lineWidth: 0,
-    fillColor: '#f58f8d'
-  }
-}], {
-  grid: {
-    show: false
-  }
-});
-
-
-
- var plot = $.plot($('#flotLine1'),[{
-  data: [[0, 1], [1, 3], [2,6], [3, 5], [4, 7], [5, 8], [6, 10]],
-  color: '#fff'
-}],
-{
-  series: {
-    lines: {
-      show: false
-    },
-    splines: {
-      show: true,
-      tension: 0.4,
-      lineWidth: 2
-        //fill: 0.4
+  // Yaşa Göre Depresyon Oranları
+  var ctx = document.getElementById('sales-chart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "79", "80", "82", "89"],
+      datasets: [{
+        label: "Kadınlarda Depresyon Seviyesi",
+        data: [40.949495, 40.554795, 39.375820, 38.693699, 37.510006, 35.952401, 35.151482, 35.251521, 34.649645, 34.811955, 35.135704, 34.719346, 34.691433, 34.363537, 33.700521, 34.489028, 32.068136, 32.051454, 31.133956, 31.693750, 31.252669, 31.097778, 33.439614, 29.919255, 31.768212, 31.151899, 31.439024, 30.936170, 30.578313, 30.724138, 32.750000, 31.687500, 29.607843, 31.012987, 31.782609, 30.039474, 30.732143, 32.310811, 30.717391, 28.125000, 32.276596, 29.840909, 32.081081, 29.787879, 32.810811, 31.424242, 35.550000, 31.208333, 29.857143, 25.000000, 36.153846, 26.733333, 33.733333, 28.375000, 31.666667, 29.000000, 28.000000, 42.000000, 33.600000, 28.142857, 38.000000, 24.000000, 55.000000, 14.666667, 37.000000, 34.500000, 30.500000, 31.000000],
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(220,53,69,0.75)',
+        borderWidth: 2,
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointBorderColor: 'transparent',
+        pointBackgroundColor: 'rgba(220,53,69,0.75)',
       },
-      shadowSize: 0
+      {
+        label: "Erkeklerde Depresyon Seviyesi",
+        data: [37.822581, 39.454545, 37.361011, 36.472648, 36.781065, 35.684292, 34.250712, 34.563131, 33.657312, 34.523726, 34.145957, 33.916859, 34.743386, 32.705085, 32.889796, 32.781095, 33.860294, 33.418605, 33.974790, 32.090909, 30.445455, 33.172840, 30.845238, 28.173333, 34.387755, 31.140845, 31.500000, 31.800000, 31.268293, 31.230769, 31.562500, 37.189189, 32.976744, 34.625000, 33.829787, 32.793103, 36.187500, 32.511628, 35.047619, 30.805556, 33.333333, 29.178571, 32.760870, 34.500000, 33.900000, 34.909091, 31.133333, 26.562500, 31.157895, 30.526316, 24.384615, 28.875000, 28.750000, 31.000000, 29.714286, 29.375000, 16.333333, 39.833333, 19.333333, 26.000000, 32.500000, 23.000000, 19.571429, 20.000000, 14.000000, 21.500000, 27.500000, 24.000000, 23.000000],
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(0,123,255,0.75)',
+        borderWidth: 2,
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointBorderColor: 'transparent',
+        pointBackgroundColor: 'rgba(0,123,255,0.75)',
+      }]
     },
-    points: {
-      show: false,
-    },
-    legend: {
-      noColumns: 1,
-      position: 'nw'
-    },
-    grid: {
-      hoverable: true,
-      clickable: true,
-      show: false
-    },
-    yaxis: {
-      min: 0,
-      max: 10,
-      color: '#eee',
-      font: {
-        size: 10,
-        color: '#6a7074'
-      }
-    },
-    xaxis: {
-      color: '#eee',
-      font: {
-        size: 10,
-        color: '#6a7074'
-      }
-    }
-  });
-
-
- var plot = $.plot($('#flotLine2'),[{
-  data: [[0, 8], [1, 5], [2,7], [3, 8], [4, 7], [5, 10], [6, 8], [7, 5], [8, 8], [9, 6], [10, 4]],
-  label: 'New Data Flow',
-  color: '#42a5f5'
-}],
-{
-  series: {
-    lines: {
-      show: false
-    },
-    splines: {
-      show: true,
-      tension: 0.4,
-      lineWidth: 1,
-      fill: 0.25
-    },
-    shadowSize: 0
-  },
-  points: {
-    show: false
-  },
+    options: {
+      responsive: true,
   legend: {
-    show: false
-  },
-  grid: {
-    show: false
-  }
-});
-
- var plot = $.plot($('#flotLine3'),[{
-  data: [[0, 8], [1, 5], [2,7], [3, 8], [4, 7], [5, 10], [6, 8], [7, 5], [8, 8], [9, 6], [10, 4]],
-  label: 'New Data Flow',
-  color: '#ffa726'
-}],
-{
-  series: {
-    lines: {
-      show: false
-    },
-    splines: {
-      show: true,
-      tension: 0.4,
-      lineWidth: 1,
-      fill: 0.25
-    },
-    shadowSize: 0
-  },
-  points: {
-    show: false
-  },
-  legend: {
-    show: false
-  },
-  grid: {
-    show: false
-  }
-});
-
- var plot = $.plot($('#flotLine4'),[{
-  data: [[0, 8], [1, 5], [2,7], [3, 8], [4, 7], [5, 10], [6, 8], [7, 5], [8, 8], [9, 6], [10, 4]],
-  label: 'New Data Flow',
-  color: '#5c6bc0'
-}],
-{
-  series: {
-    lines: {
-      show: false
-    },
-    splines: {
-      show: true,
-      tension: 0.4,
-      lineWidth: 1,
-      fill: 0.25
-    },
-    shadowSize: 0
-  },
-  points: {
-    show: false
-  },
-  legend: {
-    show: false
-  },
-  grid: {
-    show: false
-  }
-});
-
-
- var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
-
- var plot = $.plot($('#flotLine5'),[{
-  data: newCust,
-  label: 'New Data Flow',
-  color: '#fff'
-}],
-{
-  series: {
-    lines: {
-      show: true,
-      lineColor: '#fff',
-      lineWidth: 1
-    },
-    points: {
-      show: true,
-      fill: true,
-      fillColor: "#ffffff",
-      symbol: "circle",
-      radius: 3
-    },
-    shadowSize: 0
-  },
-  points: {
-    show: true,
-  },
-  legend: {
-    show: false
-  },
-  grid: {
-    show: false
-  }
-});
-
-
- /**************** PIE CHART *******************/
- var piedata = [
- { label: "Desktop visits", data: [[1,32]], color: '#5c6bc0'},
- { label: "Tab visits", data: [[1,33]], color: '#ef5350'},
- { label: "Mobile visits", data: [[1,35]], color: '#66bb6a'}
- ];
-
- $.plot('#flotPie1', piedata, {
-  series: {
-    pie: {
-      show: true,
-      radius: 1,
-      innerRadius: 0.4,
-      label: {
-        show: true,
-        radius: 2/3,
-        threshold: 1
+        display: true,
+        position: 'top',
+        labels: {
+          fontFamily: 'Montserrat',
+          fontSize: 12
+        }
       },
-      stroke: { 
-        width: 0.1
-      }
-    }
-  },
-  grid: {
-    hoverable: true,
-    clickable: true
-  }
-});
-
-
-// Real Time Chart
-
-
-var data = [], totalPoints = 50;
-
-function getRandomData() {
-  if (data.length > 0)
-    data = data.slice(1);
-  while (data.length < totalPoints) {
-    var prev = data.length > 0 ? data[data.length - 1] : 50,
-    y = prev + Math.random() * 10 - 5;
-    if (y < 0) {
-      y = 0;
-    } else if (y > 100) {
-      y = 100;
-    }
-    data.push(y);
-  }
-  var res = [];
-  for (var i = 0; i < data.length; ++i) {
-    res.push([i, data[i]])
-  }
-  return res;
-}
-
-
-  // Set up the control widget
-  var updateInterval = 1000;
-
-  var plot5 = $.plot('#flotRealtime2', [ getRandomData() ], {
-    colors: ['#5c6bc0'],
-
-    series: {
-      // label: 'Upload',
-      lines: {
-        show: true,
-        lineWidth: 0,
-        fill: 0.9
-      },
-      shadowSize: 0 // Drawing is faster without shadows
-    },
-    grid: {
-      show: false
-    },
-    xaxis: {
-      color: '#eee',
-      font: {
-        size: 10,
-        color: '#6a7074'
-      }
-    },
-    yaxis: {
-      min: 0,
-      max: 100,
-      color: '#eee',
-      font: {
-        size: 10,
-        color: '#6a7074'
-      }
-    }
-  });
-
-  function update_plot5() {
-    plot5.setData([getRandomData()]);
-    plot5.draw();
-    setTimeout(update_plot5, updateInterval);
-  }
-
-  update_plot5();
-
-
-// Traffic Chart
-
-  if ($('#traffic-chart').length) {
-    var chart = new Chartist.Line('#traffic-chart', {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      series: [
-      [13000, 18000, 35000, 18000, 25000, 26000, 22000, 20000, 18000, 35000, 18000, 25000],
-      [15000, 23000, 15000, 30000, 20000, 31000, 15000, 15000, 23000, 15000, 30000, 20000],
-      [25000, 15000, 38000, 25500, 15000, 22500, 30000, 25000, 15000, 38000, 25500, 15000]
-      ]
-    }, {
-      low: 0,
-      showArea: true,
-      showLine: false,
-      showPoint: false,
-      fullWidth: true,
-      axisX: {
-        showGrid: true
-      }
-    });
-
-    chart.on('draw', function(data) {
-      if(data.type === 'line' || data.type === 'area') {
-        data.element.animate({
-          d: {
-            begin: 2000 * data.index,
-            dur: 2000,
-            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-            to: data.path.clone().stringify(),
-            easing: Chartist.Svg.Easing.easeOutQuint
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
+            display: true,
+            drawBorder: false,
+            color: 'rgba(0,0,0,0.1)'
+          },
+          ticks: {
+            fontFamily: 'Montserrat',
+            fontSize: 11
           }
-        });
+        }],
+        yAxes: [{
+          display: true,
+          gridLines: {
+            display: true,
+            drawBorder: false,
+            color: 'rgba(0,0,0,0.1)'
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Depresyon Seviyesi',
+            fontFamily: 'Montserrat',
+            fontSize: 12
+          },
+          ticks: {
+            beginAtZero: false,
+            max: 60,
+            min: 0,
+            fontFamily: 'Montserrat',
+            fontSize: 11
+          }
+        }]
       }
-    });
-  }
-
-/* Gauge Chart */
-
-  var g1;
-
-  document.addEventListener("DOMContentLoaded", function(event) {
-    g1 = new JustGage({
-      id: "g1",
-      value: 72,
-      //title: "Completed",
-      fill: '#ffa726',
-      symbol: '%',
-      min: 0,
-      max: 100,
-      donut: true,
-      gaugeWidthScale: 0.4,
-      counter: true,
-      hideInnerShadow: true
-    });
-
+    }
   });
 
-  /* Sparkline Tab Charts */
-
-  $('#sparklinedash, #sparklinedash6, #sparklinedash11').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+  // Eğitim Seviyesine Göre Ortalama Stres Skoru
+  var ctx = document.getElementById("singelBarChart");
+  ctx.height = 300;
+  var myChart = new Chart(ctx, {
     type: 'bar',
-    height: '30',
-    barWidth: '5',
-    disableHiddenCheck: true,
-    resize: true,
-    barSpacing: '2',
-    barColor: '#42a5f5'
-  });
-  
-  $('#sparklinedash2, #sparklinedash7, #sparklinedash12').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
-    type: 'bar',
-    height: '30',
-    barWidth: '5',
-    resize: true,
-    barSpacing: '2',
-    barColor: '#ef5350'
-  });
-  $('#sparklinedash3, #sparklinedash8, #sparklinedash13').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
-    type: 'bar',
-    height: '30',
-    barWidth: '5',
-    resize: true,
-    barSpacing: '2',
-    barColor: '#66bb6a'
-  });
-  $('#sparklinedash4, #sparklinedash9, #sparklinedash14').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
-    type: 'bar',
-    height: '30',
-    barWidth: '5',
-    resize: true,
-    barSpacing: '2',
-    barColor: '#5c6bc0'
-  });
-  $('#sparklinedash5, #sparklinedash10, #sparklinedash15').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
-    type: 'bar',
-    height: '30',
-    barWidth: '5',
-    resize: true,
-    barSpacing: '2',
-    barColor: '#ffa726'
-  });
-
- // Chartist
-
-  var ctx = document.getElementById('area_chart').getContext('2d');
-
-  var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
         data: {
-          labels: ["Jan", "Feb", "Mar", "Jun", "Jul", "Aug", "Sep"],
+      labels: ["İlkokul", "Ortaokul", "Lise", "Üniversite"],
           datasets: [{
-            label: "My First dataset",
-            backgroundColor: 'transparent',
-            borderColor: '#4fabf5',
-            pointBackgroundColor: "#ffffff",
-            data: [5000, 2700, 8500, 5500, 4500, 4900, 3000]
-          },
-          {
-            label: "My Second dataset",
-            backgroundColor: 'rgba(230,240,244,.5)',
-            borderColor: '#6ebe73',
-            pointBackgroundColor: "#ffffff",
-            data: [5500, 2900, 7000, 3500, 5000, 3300, 4800 ]
-          },
-          {
-            label: "My Third dataset",
-            backgroundColor: 'transparent',
-            borderColor: '#5c6bc0',
-            pointBackgroundColor: "#ffffff",
-            data: [2700, 7000, 3500, 6900, 2600, 6500, 2200]
+        label: "Ortalama Stres Skoru",
+        data: [31.05, 29.26, 27.66, 26.40],
+        borderColor: "rgba(0, 194, 146, 0.9)",
+        borderWidth: "0",
+        backgroundColor: "rgba(0, 194, 146, 0.5)"
           }]
         },
-
-        // Configuration options go here
         options: {
-          maintainAspectRatio: true,
+      responsive: true,
           legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          fontFamily: 'Montserrat',
+          fontSize: 12
+        }
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          gridLines: {
             display: false
           },
-
-          scales: {
-            xAxes: [{
-              display: true
+          ticks: {
+            fontFamily: 'Montserrat',
+            fontSize: 11,
+            maxRotation: 45,
+            minRotation: 45
+          }
             }],
             yAxes: [{
               display: true,
               gridLines: {
-                zeroLineColor: '#e8e9ef',
-                color: '#e8e9ef',
-                drawBorder: true
-              }
-            }]
-
+            display: true,
+            drawBorder: false,
+            color: 'rgba(0,0,0,0.1)'
           },
-          elements: {
-            line: {
-              tension: 0.00001,
-              borderWidth: 1
-            },
-            point: {
-              radius: 4,
-              hitRadius: 10,
-              hoverRadius: 4,
-              borderWidth: 2
+          ticks: {
+            beginAtZero: true,
+            fontFamily: 'Montserrat',
+            fontSize: 11
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Stres Skoru',
+            fontFamily: 'Montserrat',
+            fontSize: 12
             }
+        }]
           }
         }
       });
 
+  // En Çok Aynı Cevabı Alan Sorular
+  var ctx = document.getElementById("radarChart");
+  var myChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ["Q1A", "Q2A", "Q3A", "Q4A", "Q5A", "Q6A", "Q7A", "Q8A", "Q9A", "Q10A",
+               "Q11A", "Q12A", "Q13A", "Q14A", "Q15A", "Q16A", "Q17A", "Q18A", "Q19A", "Q20A",
+               "Q21A", "Q22A", "Q23A", "Q24A", "Q25A", "Q26A", "Q27A", "Q28A", "Q29A", "Q30A",
+               "Q31A", "Q32A", "Q33A", "Q34A", "Q35A", "Q36A", "Q37A", "Q38A", "Q39A", "Q40A",
+               "Q41A", "Q42A"],
+      datasets: [{
+        label: "Soru Tekrar Sayıları",
+        data: [13320, 14385, 14062, 17757, 12794, 13291, 18092, 13471, 11788, 11007,
+               13598, 12601, 13922, 12535, 19587, 11696, 13509, 12789, 18506, 11946,
+               12694, 14327, 25111, 13790, 13569, 11979, 12889, 12734, 12280, 12535,
+               14022, 14441, 13146, 13064, 15373, 12517, 11580, 12551, 14405, 12219,
+               17323, 12886],
+        borderColor: "rgba(0, 194, 146, 0.6)",
+        borderWidth: "1",
+        backgroundColor: "rgba(0, 194, 146, 0.4)"
+      }]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          fontFamily: 'Montserrat',
+          fontSize: 12
+        }
+      },
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          fontFamily: 'Montserrat',
+          fontSize: 11
+        }
+      }
+    }
+  });
 
-
-
-})( jQuery );
-
-
-/*Knob*/
-
-if (Gauge) {
-
-  var opts = {
-        lines: 12, // The number of lines to draw
-        angle: 0, // The length of each line
-        lineWidth: 0.05, // The line thickness
-        pointer: {
-            length: .75, // The radius of the inner circle
-            strokeWidth: 0.03, // The rotation offset
-            color: '#000' // Fill color
-          },
-        limitMax: 'true', // If true, the pointer will not go past the end of the gauge
-        colorStart: '#42a5f5', // Colors
-        colorStop: '#42a5f5', // just experiment with them
-        strokeColor: '#fbfbfc', // to see which ones work best for you
-        generateGradient: true
-      };
-
-
-    var target = document.getElementById('g2'); // your canvas element
-    var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-    gauge.maxValue = 3000; // set max gauge value
-    gauge.animationSpeed = 32; // set animation speed (32 is default value)
-    gauge.set(1150); // set actual value
-    //gauge.setTextField(document.getElementById("gauge-textfield"));
-
-  }
+})(jQuery);
