@@ -181,4 +181,26 @@
     }
   });
 
+  // Canvas elementlerini kontrol et
+  document.addEventListener('DOMContentLoaded', function() {
+    // Chart.js grafikleri için
+    const chartElements = document.querySelectorAll('canvas');
+    chartElements.forEach(canvas => {
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                // Grafik oluşturma kodları buraya gelecek
+            }
+        }
+    });
+
+    // Flot grafikleri için
+    const flotElements = document.querySelectorAll('.flot-chart');
+    flotElements.forEach(element => {
+        if (element) {
+            // Flot grafik oluşturma kodları buraya gelecek
+        }
+    });
+  });
+
 })(jQuery);

@@ -133,6 +133,30 @@
 
 })(jQuery);
 
+$(document).ready(function() {
+    // Hava durumu verilerini göster
+    function showWeather() {
+        // Varsayılan hava durumu verileri
+        const defaultWeather = {
+            city: "İstanbul",
+            temp: "20°C",
+            condition: "Güneşli"
+        };
+
+        // Hava durumu widget'ını güncelle
+        $('.weather-widget').html(`
+            <div class="weather-info">
+                <h3>${defaultWeather.city}</h3>
+                <div class="temperature">${defaultWeather.temp}</div>
+                <div class="condition">${defaultWeather.condition}</div>
+            </div>
+        `);
+    }
+
+    // Sayfa yüklendiğinde hava durumunu göster
+    showWeather();
+});
+
 
 
 

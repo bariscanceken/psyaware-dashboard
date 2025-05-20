@@ -49,12 +49,14 @@
                     placeholder="Kendinizi tanıtın, deneyimlerinizi ve neden bize katılmak istediğinizi anlatın..."></textarea>
             </div>
 
-            <div class="flex items-center">
-                <input type="checkbox" id="terms" name="terms" required
-                    class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                <label for="terms" class="ml-2 block text-sm text-gray-700">
-                    <a href="#" class="text-purple-600 hover:text-purple-500">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                        <a href="privacy-policy.html">Gizlilik Politikamızı</a> okudum ve kabul ediyorum
                 </label>
+                </div>
+                <div class="error-message" id="termsError"></div>
             </div>
 
             <button type="submit"

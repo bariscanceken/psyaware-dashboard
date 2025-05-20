@@ -33,6 +33,8 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/extension/bmap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/world.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/china.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
 
    <style>
     #weatherWidget .currentDesc {
@@ -82,6 +84,129 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            z-index: 1000;
+        }
+
+        .dropdown-menu {
+            z-index: 1001;
+        }
+
+        .profile-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            text-align: center;
+        }
+
+        .profile-popup img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-popup:hover {
+            background: #cc0000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+        }
+
+        #nprogress .bar {
+            background: #28a745 !important;
+            height: 4px !important;
+        }
+
+        #nprogress .peg {
+            box-shadow: 0 0 10px #28a745, 0 0 5px #28a745 !important;
+        }
+
+        #nprogress .spinner-icon {
+            border-top-color: #28a745 !important;
+            border-left-color: #28a745 !important;
+        }
+
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-transition.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-transition .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #28a745;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -150,8 +275,10 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    <div class="logo-container">
+                        <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+                        <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    </div>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -175,15 +302,15 @@
                                 <p class="red">3 Bildiriminiz var</p>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-check"></i>
-                                    <p>Sunucu #1 aşırı yüklendi.</p>
+                                    <p>Dr. Ahmet Yılmaz: Randevu talebiniz onaylandı. 15 Mart saat 14:00'te görüşmek üzere.</p>
                                 </a>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-info"></i>
-                                    <p>Sunucu #2 aşırı yüklendi.</p>
+                                    <p>Uzm. Psk. Mehmet Demir: Terapi notlarınız hazır. Görüşme öncesi inceleyebilirsiniz.</p>
                                 </a>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-warning"></i>
-                                    <p>Sunucu #3 aşırı yüklendi.</p>
+                                    <p>Dr. Ayşe Kaya: Haftalık değerlendirme raporunuz hazır. Görüşmek üzere.</p>
                                 </a>
                             </div>
                         </div>
@@ -196,35 +323,35 @@
                             <div class="dropdown-menu" aria-labelledby="message">
                                 <p class="red">4 Mesajınız var</p>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/ahmetbey.jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Ahmet Yılmaz</span>
+                                        <span class="name float-left">Dr. Ahmet Yılmaz</span>
                                         <span class="time float-right">Az önce</span>
-                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                        <p>Merhaba, randevu öncesi hazırlık formunu doldurmanızı rica ediyorum.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/images (1).jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Mehmet Demir</span>
+                                        <span class="name float-left">Uzm. Psk. Mehmet Demir</span>
                                         <span class="time float-right">5 dakika önce</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                        <p>Terapi seansı için önerilen kaynakları paylaştım. İnceleyebilirsiniz.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/psikolog-nedir.jpg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Ayşe Kaya</span>
+                                        <span class="name float-left">Dr. Ayşe Kaya</span>
                                         <span class="time float-right">10 dakika önce</span>
-                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                        <p>Haftalık değerlendirme raporunuz hazır. Görüşmek üzere.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/images.jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Zeynep Yıldız</span>
+                                        <span class="name float-left">Uzm. Psk. Zeynep Yıldız</span>
                                         <span class="time float-right">15 dakika önce</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                        <p>Grup terapisi programımız başlıyor. Katılımınızı bekleriz.</p>
                                     </div>
                                 </a>
                             </div>
@@ -232,18 +359,12 @@
                     </div>
 
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
-                        </a>
+                        <button class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar" src="images/benvecano.jpg" alt="User Avatar">
+                        </button>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Profilim</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Bildirimler <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Ayarlar</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Çıkış Yap</a>
+                            <a class="nav-link" href="logout.html"><i class="fa fa-power-off"></i>Çıkış</a>
                         </div>
                     </div>
 
@@ -331,18 +452,16 @@
                 </div>
                 <!-- /Widgets -->
 
-                <!-- Dünya Haritası -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="box-title">Dünya Genelinde Veri Dağılımı</h4>
-                                <div id="vmap" style="width:100%;height:600px;"></div>
+                                <h4 class="box-title">Kıtalar Arası Dağılım</h4>
+                                <div id="container" style="height: 400px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /Dünya Haritası -->
 
                 <div class="clearfix"></div>
             </div>
@@ -367,16 +486,25 @@
     </div>
     <!-- /#right-panel -->
 
+    <!-- Profile Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="profile-popup" id="profilePopup">
+        <button class="close-popup" onclick="closeProfilePopup()">&times;</button>
+        <img src="images/benvecano.jpg" alt="Profile Picture">
+        <h3>Canolar</h3>
+    </div>
+
+    <!-- Yukarı Dönme Tuşu -->
+    <button class="scroll-to-top" aria-label="Yukarı Dön">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/extension/bmap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/world.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/china.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
     <script src="assets/js/main.js"></script>
 
     <!--  Chart js -->
@@ -396,408 +524,387 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
 
-    <!--Local Stuff-->
     <script>
-        jQuery(document).ready(function($) {
-            "use strict";
-            $('.count').each(function () {
-                $(this).prop('Counter',0).animate({
-                    Counter: $(this).data('count')
-                }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function (now) {
-                        $(this).text(Math.ceil(now).toLocaleString());
-                    }
-                });
-            });
-            // Pie chart flotPie1
-            var piedata = [
-                { label: "Masaüstü ziyaretleri", data: [[1,32]], color: '#5c6bc0'},
-                { label: "Tablet ziyaretleri", data: [[1,33]], color: '#ef5350'},
-                { label: "Mobil ziyaretler", data: [[1,35]], color: '#66bb6a'}
-            ];
-
-            $.plot('#flotPie1', piedata, {
-                series: {
-                    pie: {
-                        show: true,
-                        radius: 1,
-                        innerRadius: 0.65,
-                        label: {
-                            show: true,
-                            radius: 2/3,
-                            threshold: 1
-                        },
-                        stroke: {
-                            width: 0
-                        }
-                    }
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                }
-            });
-            // Pie chart flotPie1  End
-            // cellPaiChart
-            var cellPaiChart = [
-                { label: "Doğrudan Satış", data: [[1,65]], color: '#5b83de'},
-                { label: "Kanal Satışı", data: [[1,35]], color: '#00bfa5'}
-            ];
-            $.plot('#cellPaiChart', cellPaiChart, {
-                series: {
-                    pie: {
-                        show: true,
-                        stroke: {
-                            width: 0
-                        }
-                    }
-                },
-                legend: {
-                    show: false
-                },grid: {
-                    hoverable: true,
-                    clickable: true
-                }
-
-            });
-            // cellPaiChart End
-            // Line Chart  #flotLine5
-            var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
-
-            var plot = $.plot($('#flotLine5'),[{
-                data: newCust,
-                label: 'Yeni Veri Akışı',
-                color: '#fff'
-            }],
-            {
-                series: {
-                    lines: {
-                        show: true,
-                        lineColor: '#fff',
-                        lineWidth: 2
-                    },
-                    points: {
-                        show: true,
-                        fill: true,
-                        fillColor: "#ffffff",
-                        symbol: "circle",
-                        radius: 3
-                    },
-                    shadowSize: 0
-                },
-                points: {
-                    show: true,
-                },
-                legend: {
-                    show: false
-                },
-                grid: {
-                    show: false
-                }
-            });
-            // Line Chart  #flotLine5 End
-            // Traffic Chart using chartist
-            if ($('#traffic-chart').length) {
-                var chart = new Chartist.Line('#traffic-chart', {
-                  labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'],
-                  series: [
-                  [0, 18000, 35000,  25000,  22000,  0],
-                  [0, 33000, 15000,  20000,  15000,  300],
-                  [0, 15000, 28000,  15000,  30000,  5000]
-                  ]
-              }, {
-                  low: 0,
-                  showArea: true,
-                  showLine: false,
-                  showPoint: false,
-                  fullWidth: true,
-                  axisX: {
-                    showGrid: true
-                }
-            });
-
-                chart.on('draw', function(data) {
-                    if(data.type === 'line' || data.type === 'area') {
-                        data.element.animate({
-                            d: {
-                                begin: 2000 * data.index,
-                                dur: 2000,
-                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                                to: data.path.clone().stringify(),
-                                easing: Chartist.Svg.Easing.easeOutQuint
-                            }
-                        });
-                    }
-                });
-            }
-            // Traffic Chart using chartist End
-            //Traffic chart chart-js
-            if ($('#TrafficChart').length) {
-                var ctx = document.getElementById( "TrafficChart" );
-                ctx.height = 150;
-                var myChart = new Chart( ctx, {
-                    type: 'line',
-                    data: {
-                        labels: [ "Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem" ],
-                        datasets: [
-                        {
-                            label: "Ziyaret",
-                            borderColor: "rgba(4, 73, 203,.09)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(4, 73, 203,.5)",
-                            data: [ 0, 2900, 5000, 3300, 6000, 3250, 0 ]
-                        },
-                        {
-                            label: "Hemen Çıkış",
-                            borderColor: "rgba(245, 23, 66, 0.9)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(245, 23, 66,.5)",
-                            pointHighlightStroke: "rgba(245, 23, 66,.5)",
-                            data: [ 0, 4200, 4500, 1600, 4200, 1500, 4000 ]
-                        },
-                        {
-                            label: "Hedeflenen",
-                            borderColor: "rgba(40, 169, 46, 0.9)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(40, 169, 46, .5)",
-                            pointHighlightStroke: "rgba(40, 169, 46,.5)",
-                            data: [1000, 5200, 3600, 2600, 4200, 5300, 0 ]
-                        }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        tooltips: {
-                            mode: 'index',
-                            intersect: false
-                        },
-                        hover: {
-                            mode: 'nearest',
-                            intersect: true
-                        }
-
-                    }
-                } );
-            }
-            //Traffic chart chart-js  End
-            // Bar Chart #flotBarChart
-            $.plot("#flotBarChart", [{
-                data: [[0, 18], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6],[16,15], [18, 9],[20,17], [22,7],[24,4], [26,9],[28,11]],
-                bars: {
-                    show: true,
-                    lineWidth: 0,
-                    fillColor: '#ffffff8a'
-                }
-            }], {
-                grid: {
-                    show: false
-                }
-            });
-            // Bar Chart #flotBarChart End
+        // Sayfa geçiş animasyonu için
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tüm linkleri seç
+            const links = document.querySelectorAll('a[href]');
             
-            // 3D World Map
-            var chartDom = document.getElementById('worldMap3D');
-            var myChart = echarts.init(chartDom);
-
-            var option = {
-                backgroundColor: '#404a59',
-                tooltip: {
-                    formatter: function(params) {
-                        return params.name + ': ' + params.value[2] + ' katılımcı';
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Eğer link harici bir siteye yönlendiriyorsa veya aynı sayfada bir yere gidiyorsa işlem yapma
+                    if (this.hostname !== window.location.hostname || this.hash) {
+                        return;
                     }
-                },
-                geo3D: {
-                    map: 'world',
-                    roam: true,
-                    itemStyle: {
-                        color: '#323c48',
-                        opacity: 1,
-                        borderWidth: 1,
-                        borderColor: '#404a59'
-                    },
-                    emphasis: {
-                        itemStyle: {
-                            color: '#2a333d'
-                        }
-                    },
-                    light: {
-                        main: {
-                            intensity: 1.2,
-                            shadow: true
-                        },
-                        ambient: {
-                            intensity: 0.3
-                        }
-                    },
-                    viewControl: {
-                        distance: 120,
-                        alpha: 30,
-                        beta: 0,
-                        center: [0, 0, 0],
-                        animation: true,
-                        animationDurationUpdate: 1000
-                    },
-                    groundPlane: {
-                        show: true,
-                        color: '#404a59'
-                    },
-                    regionHeight: 3
-                },
-                series: [{
-                    type: 'scatter3D',
-                    coordinateSystem: 'geo3D',
-                    data: [
-                        {name: 'Türkiye', value: [35.2433, 38.9637, 80]},
-                        {name: 'Amerika', value: [-95.7129, 37.0902, 8207]},
-                        {name: 'İngiltere', value: [-3.435973, 55.378051, 1180]},
-                        {name: 'Almanya', value: [10.4515, 51.1657, 314]},
-                        {name: 'Fransa', value: [2.2137, 46.2276, 187]},
-                        {name: 'İtalya', value: [12.5674, 41.8719, 138]},
-                        {name: 'İspanya', value: [-3.7492, 40.4637, 90]},
-                        {name: 'Rusya', value: [105.3188, 61.524, 61]},
-                        {name: 'Çin', value: [104.1954, 35.8617, 12]},
-                        {name: 'Japonya', value: [138.2529, 36.2048, 85]}
-                    ].map(function (item) {
-                        return {
-                            name: item.name,
-                            value: [...item.value, Math.sqrt(item.value[2])],
-                            itemStyle: {
-                                color: '#ffa500'
-                            }
-                        };
-                    }),
-                    symbolSize: 12,
-                    label: {
-                        show: false,
-                        formatter: '{b}',
-                        position: 'right',
-                        textStyle: {
-                            color: '#fff',
-                            fontSize: 12
-                        }
-                    },
-                    emphasis: {
-                        label: {
-                            show: true
-                        },
-                        itemStyle: {
-                            color: '#ff0'
-                        }
-                    }
-                }]
-            };
 
-            myChart.setOption(option);
+                    e.preventDefault();
+                    const href = this.href;
 
-            // Pencere boyutu değiştiğinde haritayı yeniden boyutlandır
-            window.addEventListener('resize', function() {
-                myChart.resize();
+                    // Yükleme animasyonunu başlat
+                    NProgress.start();
+                    
+                    // Sayfa geçiş animasyonunu göster
+                    const transition = document.createElement('div');
+                    transition.className = 'page-transition';
+                    transition.innerHTML = '<div class="spinner"></div>';
+                    document.body.appendChild(transition);
+                    
+                    // Animasyonu aktif et
+                    setTimeout(() => {
+                        transition.classList.add('active');
+                    }, 10);
+
+                    // Yeni sayfaya yönlendir
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+
+            // Sayfa yüklendiğinde animasyonu kapat
+            window.addEventListener('load', function() {
+                NProgress.done();
+                const transition = document.querySelector('.page-transition');
+                if (transition) {
+                    transition.classList.remove('active');
+                    setTimeout(() => {
+                        transition.remove();
+                    }, 300);
+                }
             });
         });
     </script>
+    
+    <script>
 
+        function showProfilePopup(event) {
+            event.preventDefault();
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('profilePopup').style.display = 'block';
+        }
+
+        function closeProfilePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('profilePopup').style.display = 'none';
+        }
+
+        // Overlay'e tıklandığında da popup'ı kapat
+        document.getElementById('overlay').addEventListener('click', closeProfilePopup);
+
+// Radar Chart (Logaritmik Ölçekli)
+var dom = document.getElementById('container');
+var myChart = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false
+});
+var app = {};
+
+// Orijinal veriler
+var rawData = [24460, 9480, 3370, 825, 348, 222];
+var labels = ['Asya', 'Kuzey Amerika', 'Avrupa', 'Okyanusya', 'Güney Amerika', 'Afrika'];
+
+// Logaritmik veriler (log10)
+var logData = rawData.map(x => Math.log10(x));
+
+// Maksimum logaritmik değeri bul
+var maxLog = Math.max(...logData);
+
+var indicator = labels.map((label, index) => {
+    return {
+        name: label,
+        max: maxLog
+    };
+});
+
+var option = {
+    title: {
+        text: 'Kıtalar Arası Katılımcı Dağılımı (Log Ölçekli)'
+    },
+    legend: {
+        data: ['Katılımcı Sayısı']
+    },
+    radar: {
+        indicator: indicator,
+        splitNumber: 6,
+        axisName: {
+            color: '#000000'
+        },
+        splitLine: {
+            lineStyle: {
+                color: ['#1E90FF']
+            }
+        },
+        splitArea: {
+                        show: true,
+            areaStyle: {
+                color: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)']
+            }
+        }
+    },
+    series: [
+        {
+            name: 'Katılımcı Dağılımı',
+            type: 'radar',
+            data: [
+                {
+                    value: logData,
+                    name: 'Katılımcı Sayısı',
+                    areaStyle: {
+                        color: 'rgba(0, 0, 0, 0.6)'
+                    },
+                    lineStyle: {
+                        color: '#1E90FF',
+                        width: 2
+                    },
+                    itemStyle: {
+                        color: '#1E90FF'
+                    }
+                }
+            ],
+            emphasis: {
+                lineStyle: {
+                    width: 4
+                }
+            }
+        }
+    ]
+};
+
+myChart.setOption(option);
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+        // Kıta verilerini tanımla
+        const kitalar = {
+            'Asya': {
+                'Malezya': 21605,
+                'Endonezya': 884,
+                'Filipinler': 749,
+                'Hindistan': 446,
+                'Singapur': 292,
+                'Japonya': 85,
+                'Türkiye': 80,
+                'Pakistan': 79,
+                'Hong Kong': 57,
+                'Tayland': 29,
+                'Güney Kore': 31,
+                'Çin': 12,
+                'İran': 9,
+                'Kamboçya': 4,
+                'Kazakistan': 3,
+                'Tacikistan': 1,
+                'Özbekistan': 1,
+                'Ermenistan': 1,
+                'Afganistan': 1
+            },
+            'Kuzey Amerika': {
+                'Amerika Birleşik Devletleri': 8207,
+                'Kanada': 978,
+                'Meksika': 154,
+                'Jamaika': 50,
+                'Kosta Rika': 12,
+                'Porto Riko': 8,
+                'Panama': 7,
+                'Dominik Cumhuriyeti': 7,
+                'Guatemala': 7,
+                'Nikaragua': 4,
+                'Guam': 3,
+                'Honduras': 1
+            },
+            'Avrupa': {
+                'Birleşik Krallık': 1180,
+                'Almanya': 314,
+                'Fransa': 187,
+                'Polonya': 172,
+                'Romanya': 143,
+                'İtalya': 138,
+                'Hollanda': 114,
+                'İspanya': 90,
+                'Finlandiya': 81,
+                'İsveç': 76,
+                'Yunanistan': 74,
+                'İrlanda': 74,
+                'Sırbistan': 67,
+                'Portekiz': 61,
+                'Rusya': 61,
+                'Çek Cumhuriyeti': 58,
+                'Danimarka': 52,
+                'Norveç': 49,
+                'Macaristan': 47,
+                'İsviçre': 46,
+                'Avusturya': 45,
+                'Bulgaristan': 38,
+                'Belçika': 35,
+                'Slovakya': 24,
+                'Litvanya': 24,
+                'Ukrayna': 24,
+                'Bosna Hersek': 22,
+                'Estonya': 20,
+                'Slovenya': 17,
+                'Arnavutluk': 16,
+                'Makedonya': 15,
+                'İzlanda': 14,
+                'Letonya': 8,
+                'Moldova': 5,
+                'Karadağ': 3,
+                'Malta': 3,
+                'Lüksemburg': 1,
+                'Man Adası': 1
+            },
+            'Okyanusya': {
+                'Avustralya': 608,
+                'Yeni Zelanda': 216,
+                'Vanuatu': 1
+            },
+            'Güney Amerika': {
+                'Brezilya': 180,
+                'Arjantin': 55,
+                'Şili': 30,
+                'Kolombiya': 27,
+                'Venezuela': 18,
+                'Peru': 18,
+                'Ekvador': 8,
+                'Uruguay': 6,
+                'Bolivya': 3,
+                'Guyana': 2,
+                'Surinam': 1
+            },
+            'Afrika': {
+                'Güney Afrika': 79,
+                'Mısır': 75,
+                'Fas': 23,
+                'Nijerya': 21,
+                'Cezayir': 6,
+                'Sudan': 4,
+                'Mozambik': 4,
+                'Tanzanya': 2,
+                'Tunus': 2,
+                'Botsvana': 2,
+                'Angola': 2,
+                'Senegal': 1,
+                'Zimbabve': 1
+            }
+        };
+
+        // Kıtaları gösteren fonksiyon
+        function showKitalar() {
+            const kitalarListesi = ['Asya', 'Kuzey Amerika', 'Avrupa', 'Okyanusya', 'Güney Amerika', 'Afrika'];
+            const kitalarDegerleri = [24460, 9480, 3370, 825, 348, 222];
+            
+            let kitalarHTML = '<div style="max-height: 400px; overflow-y: auto;">';
+            kitalarHTML += '<table style="width:100%; border-collapse: collapse;">';
+            kitalarHTML += '<tr style="background-color: #f8f9fa;"><th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Kıta</th><th style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">Katılımcı Sayısı</th></tr>';
+            
+            kitalarListesi.forEach((kita, index) => {
+                kitalarHTML += `<tr style="cursor: pointer;" onclick="showUlkeler('${kita}')">
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">${kita}</td>
+                    <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">${kitalarDegerleri[index]}</td>
+                </tr>`;
+            });
+            
+            kitalarHTML += '</table></div>';
+
+            Swal.fire({
+                title: 'Kıtalar Arası Katılımcı Dağılımı',
+                html: kitalarHTML,
+                width: '600px',
+                showCloseButton: true,
+                showConfirmButton: false,
+                customClass: {
+                    container: 'my-swal'
+                }
+            });
+        }
+
+        // Ülkeleri gösteren fonksiyon
+        function showUlkeler(kitalarAdi) {
+            const ulkeler = kitalar[kitalarAdi];
+            let ulkeListesi = '';
+            
+            // Ülkeleri katılımcı sayısına göre sırala
+            const siraliUlkeler = Object.entries(ulkeler)
+                .sort(([,a], [,b]) => b - a);
+            
+            // HTML tablosu oluştur
+            ulkeListesi = '<div style="max-height: 400px; overflow-y: auto;">';
+            ulkeListesi += '<table style="width:100%; border-collapse: collapse;">';
+            ulkeListesi += '<tr style="background-color: #f8f9fa;"><th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Ülke</th><th style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">Katılımcı Sayısı</th></tr>';
+            
+            siraliUlkeler.forEach(([ulke, sayi]) => {
+                ulkeListesi += `<tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">${ulke}</td>
+                    <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">${sayi}</td>
+                </tr>`;
+            });
+            
+            ulkeListesi += '</table></div>';
+
+            Swal.fire({
+                title: `${kitalarAdi} Katılımcı Dağılımı`,
+                html: ulkeListesi,
+                width: '600px',
+                showCloseButton: true,
+                showConfirmButton: true,
+                confirmButtonText: 'Kıtalara Dön',
+                customClass: {
+                    container: 'my-swal'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showKitalar();
+                }
+            });
+        }
+
+        // Radar grafiğine tıklama olayı ekle
+        myChart.on('click', function() {
+            showKitalar();
+        });
+
+        window.addEventListener('resize', function() {
+            myChart.resize();
+        });
+    </script>
+
+    <!-- Yukarı Dönme Tuşu JavaScript -->
     <script>
         $(document).ready(function() {
-            // Ülke verileri
-            var countryData = {
-                'MY': 21605, 'US': 8207, 'GB': 1180, 'CA': 978, 'ID': 884, 'PH': 749, 'AU': 608,
-                'NONE': 539, 'IN': 446, 'DE': 314, 'SG': 292, 'NZ': 216, 'FR': 187, 'BR': 180,
-                'PL': 172, 'BN': 171, 'MX': 154, 'RO': 143, 'IT': 138, 'NL': 114, 'ES': 90,
-                'JP': 85, 'FI': 81, 'TR': 80, 'ZA': 79, 'PK': 79, 'SE': 76, 'EG': 75, 'GR': 74,
-                'IE': 74, 'RS': 67, 'PT': 61, 'RU': 61, 'CZ': 58, 'HK': 57, 'SA': 56, 'AR': 55,
-                'HR': 54, 'DK': 52, 'AE': 52, 'JM': 50, 'NO': 49, 'HU': 47, 'CH': 46, 'AT': 45,
-                'VN': 39, 'BG': 38, 'BE': 35, 'KR': 31, 'CL': 30, 'TH': 29, 'CO': 27, 'IL': 25,
-                'SK': 24, 'LT': 24, 'UA': 24, 'MA': 23, 'BA': 22, 'NG': 21, 'EE': 20, 'BD': 19,
-                'VE': 18, 'PE': 18, 'JO': 18, 'SI': 17, 'TW': 16, 'AL': 16, 'LK': 15, 'MK': 15,
-                'IS': 14, 'KW': 14, 'LB': 13, 'CR': 12, 'QA': 12, 'CN': 12, 'GE': 11, 'TT': 10,
-                'SV': 9, 'IR': 9, 'EC': 8, 'LV': 8, 'PR': 8, 'PA': 7, 'DO': 7, 'GT': 7, 'NP': 6,
-                'DZ': 6, 'UY': 6, 'CY': 6, 'BS': 6, 'MV': 6, 'BZ': 5, 'BH': 5, 'MD': 5, 'IQ': 5,
-                'OM': 4, 'GH': 4, 'MU': 4, 'SD': 4, 'MO': 4, 'NI': 4, 'KH': 4, 'MZ': 4, 'BY': 4,
-                'GU': 3, 'PY': 3, 'AZ': 3, 'ET': 3, 'PS': 3, 'KZ': 3, 'ME': 3, 'KE': 3, 'MT': 3,
-                'BB': 3, 'BO': 3, 'SC': 3, 'SY': 3, 'GY': 2, 'JE': 2, 'MN': 2, 'FO': 2, 'TZ': 2,
-                'TN': 2, 'GG': 2, 'BW': 2, 'AO': 2, 'XK': 1, 'RE': 1, 'CW': 1, 'TG': 1, 'SN': 1,
-                'LA': 1, 'ZW': 1, 'HN': 1, 'SR': 1, 'TJ': 1, 'VU': 1, 'AW': 1, 'KY': 1, 'LU': 1,
-                'UZ': 1, 'AM': 1, 'AF': 1, 'IM': 1, 'VC': 1,
-                // Yeni eklenen ülkeler
-                'AD': 0, 'AG': 0, 'AI': 0, 'AS': 0, 'AX': 0, 'BF': 0, 'BI': 0, 'BJ': 0, 'BM': 0,
-                'BQ': 0, 'BT': 0, 'BV': 0, 'CC': 0, 'CD': 0, 'CF': 0, 'CG': 0, 'CI': 0, 'CK': 0,
-                'CM': 0, 'CV': 0, 'DJ': 0, 'DM': 0, 'ER': 0, 'FJ': 0, 'FM': 0, 'GA': 0, 'GM': 0,
-                'GN': 0, 'GQ': 0, 'HT': 0, 'KI': 0, 'KM': 0, 'KN': 0, 'LC': 0, 'LI': 0, 'LR': 0,
-                'LS': 0, 'MG': 0, 'ML': 0, 'MR': 0, 'MS': 0, 'NA': 0, 'NE': 0, 'NF': 0, 'NR': 0,
-                'PG': 0, 'PF': 0, 'PM': 0, 'PN': 0, 'RW': 0, 'SB': 0, 'SH': 0, 'SL': 0, 'SM': 0,
-                'SO': 0, 'SS': 0, 'ST': 0, 'SZ': 0, 'TD': 0, 'TF': 0, 'TK': 0, 'TL': 0, 'TM': 0,
-                'TO': 0, 'TV': 0, 'WF': 0, 'WS': 0, 'YE': 0, 'ZM': 0
-            };
+            // Scroll olayını dinle
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    $('.scroll-to-top').addClass('show');
+                } else {
+                    $('.scroll-to-top').removeClass('show');
+                }
+            });
 
-            // Haritayı oluştur
-            var chart = echarts.init(document.getElementById('vmap'));
-            
-            var option = {
-                backgroundColor: '#F5F5F5',
-                tooltip: {
-                    trigger: 'item',
-                    formatter: function(params) {
-                        return params.name + ': ' + (params.value || 0) + ' katılımcı';
-                    }
-                },
-                visualMap: {
-                    min: 0,
-                    max: 22000,
-                    text: ['Yüksek', 'Düşük'],
-                    realtime: false,
-                    calculable: true,
-                    inRange: {
-                        color: ['#FFFFFF', '#FFB6C1', '#FF6B6B', '#FF0000', '#8B0000']
-                    }
-                },
-                series: [{
-                    name: 'Katılımcı Sayısı',
-                    type: 'map',
-                    map: 'world',
-                    roam: true,
-                    emphasis: {
-                        label: {
-                            show: true
-                        }
-                    },
-                    itemStyle: {
-                        areaColor: '#FFFFFF',
-                        borderColor: '#CCCCCC',
-                        borderWidth: 1
-                    },
-                    data: Object.keys(countryData).map(function(key) {
-                        return {
-                            name: key,
-                            value: countryData[key],
-                            itemStyle: {
-                                areaColor: countryData[key] <= 50 ? '#FFB6C1' :
-                                          countryData[key] <= 449 ? '#FF6B6B' :
-                                          countryData[key] <= 1199 ? '#FF0000' :
-                                          '#8B0000',
-                                borderColor: '#CCCCCC',
-                                borderWidth: 1
-                            }
-                        };
-                    })
-                }]
-            };
+            // Yukarı dönme tuşuna tıklandığında
+            $('.scroll-to-top').click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+                return false;
+            });
 
-            chart.setOption(option);
+            // Kullanıcı menüsü için tıklama olayı
+            $('.user-area .dropdown-toggle').click(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('.user-menu').toggleClass('show');
+            });
 
-            // Pencere boyutu değiştiğinde haritayı yeniden boyutlandır
-            window.addEventListener('resize', function() {
-                chart.resize();
+            // Sayfa herhangi bir yerine tıklandığında menüyü kapat
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.user-area').length) {
+                    $('.user-menu').removeClass('show');
+                }
             });
         });
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
-    <script src="assets/js/vmap.sampledata.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js"></script>
-    <script src="assets/js/init/vector-init.js"></script>
-
 </body>
 </html>

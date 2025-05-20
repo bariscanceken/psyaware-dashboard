@@ -23,13 +23,181 @@
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
+    <style>
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            z-index: 1000;
+        }
+
+        .dropdown-menu {
+            z-index: 1001;
+        }
+
+        .profile-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            text-align: center;
+        }
+
+        .profile-popup img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-popup:hover {
+            background: #cc0000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+        }
+        .page-transition {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .page-transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .table-responsive {
+            min-height: 200px;
+            max-height: 400px;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .dataTables_wrapper {
+            font-size: 11px;
+            width: 100%;
+        }
+
+        .table {
+            width: 100%;
+            margin: 0;
+        }
+
+        .table th, .table td {
+            padding: 0.3rem 0.6rem;
+            font-size: 13px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .card {
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .dataTables_length {
+            float: right !important;
+            margin-bottom: 0.3rem;
+        }
+
+        .dataTables_filter {
+            float: left !important;
+            margin-bottom: 0.3rem;
+        }
+
+        .dataTables_info {
+            clear: both;
+            float: left;
+            margin-top: 0.3rem;
+        }
+
+        .dataTables_paginate {
+            float: right;
+            margin-top: 0.3rem;
+        }
+
+        .dataTables_wrapper::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    </style>
+
 </head>
 <body>
+    <div class="page-transition">
+        <div class="spinner"></div>
+    </div>
     <!-- Sol Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -118,15 +286,15 @@
                                 <p class="red">3 Bildiriminiz var</p>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-check"></i>
-                                    <p>Sunucu #1 aşırı yüklendi.</p>
+                                    <p>Dr. Ahmet Yılmaz: Randevu talebiniz onaylandı. 15 Mart saat 14:00'te görüşmek üzere.</p>
                                 </a>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-info"></i>
-                                    <p>Sunucu #2 aşırı yüklendi.</p>
+                                    <p>Uzm. Psk. Mehmet Demir: Terapi notlarınız hazır. Görüşme öncesi inceleyebilirsiniz.</p>
                                 </a>
                                 <a class="dropdown-item media" href="#">
                                     <i class="fa fa-warning"></i>
-                                    <p>Sunucu #3 aşırı yüklendi.</p>
+                                    <p>Dr. Ayşe Kaya: Haftalık değerlendirme raporunuz hazır. Görüşmek üzere.</p>
                                 </a>
                             </div>
                         </div>
@@ -139,35 +307,35 @@
                             <div class="dropdown-menu" aria-labelledby="message">
                                 <p class="red">4 Mesajınız var</p>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/ahmetbey.jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Ahmet Yılmaz</span>
+                                        <span class="name float-left">Dr. Ahmet Yılmaz</span>
                                         <span class="time float-right">Az önce</span>
-                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                        <p>Merhaba, randevu öncesi hazırlık formunu doldurmanızı rica ediyorum.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/images (1).jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Mehmet Demir</span>
+                                        <span class="name float-left">Uzm. Psk. Mehmet Demir</span>
                                         <span class="time float-right">5 dakika önce</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                        <p>Terapi seansı için önerilen kaynakları paylaştım. İnceleyebilirsiniz.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/psikolog-nedir.jpg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Ayşe Kaya</span>
+                                        <span class="name float-left">Dr. Ayşe Kaya</span>
                                         <span class="time float-right">10 dakika önce</span>
-                                        <p>Merhaba, bu bir örnek mesaj</p>
+                                        <p>Haftalık değerlendirme raporunuz hazır. Görüşmek üzere.</p>
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="images/images.jpeg"></span>
                                     <div class="message media-body">
-                                        <span class="name float-left">Zeynep Yıldız</span>
+                                        <span class="name float-left">Uzm. Psk. Zeynep Yıldız</span>
                                         <span class="time float-right">15 dakika önce</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                        <p>Grup terapisi programımız başlıyor. Katılımınızı bekleriz.</p>
                                     </div>
                                 </a>
                             </div>
@@ -176,14 +344,12 @@
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="Kullanıcı Avatarı">
+                            <img class="user-avatar rounded-circle" src="images/benvecano.jpg" alt="User Avatar" onclick="showProfilePopup(event)">
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>Profilim</a>
-                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Bildirimler <span class="count">13</span></a>
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Ayarlar</a>
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Çıkış</a>
+                            <a class="nav-link" href="logout.html"><i class="fa fa-power-off"></i>Çıkış</a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -193,24 +359,6 @@
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
-                    <div class="col-sm-4">
-                        <div class="page-header float-left">
-                            <div class="page-title">
-                                <h1>Gösterge Paneli</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="page-header float-right">
-                            <div class="page-title">
-                                <ol class="breadcrumb text-right">
-                                    <li><a href="#">Gösterge Paneli</a></li>
-                                    <li><a href="#">Tablo</a></li>
-                                    <li class="active">Veri Tablosu</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -218,826 +366,828 @@
         <div class="content">
             <div class="animated fadeIn">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Veri Tablosu</strong>
+                            <div class="card-header text-center">
+                                <strong class="card-title">Psikolog Listesi</strong>
                             </div>
                             <div class="card-body">
-                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Ad</th>
-                                            <th>Soyad</th>
-                                            <th>E-posta</th>
-                                            <th>Telefon</th>
-                                            <th>Durum</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Ahmet</td>
-                                            <td>Yılmaz</td>
-                                            <td>ahmet.yilmaz@example.com</td>
-                                            <td>0532 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Ayşe</td>
-                                            <td>Kaya</td>
-                                            <td>ayse.kaya@example.com</td>
-                                            <td>0533 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Mehmet</td>
-                                            <td>Demir</td>
-                                            <td>mehmet.demir@example.com</td>
-                                            <td>0534 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Zeynep</td>
-                                            <td>Şahin</td>
-                                            <td>zeynep.sahin@example.com</td>
-                                            <td>0535 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Ali</td>
-                                            <td>Öztürk</td>
-                                            <td>ali.ozturk@example.com</td>
-                                            <td>0536 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Fatma</td>
-                                            <td>Çelik</td>
-                                            <td>fatma.celik@example.com</td>
-                                            <td>0537 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Mustafa</td>
-                                            <td>Arslan</td>
-                                            <td>mustafa.arslan@example.com</td>
-                                            <td>0538 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>Elif</td>
-                                            <td>Yıldız</td>
-                                            <td>elif.yildiz@example.com</td>
-                                            <td>0539 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Hasan</td>
-                                            <td>Kılıç</td>
-                                            <td>hasan.kilic@example.com</td>
-                                            <td>0540 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Merve</td>
-                                            <td>Aydın</td>
-                                            <td>merve.aydin@example.com</td>
-                                            <td>0541 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>11</td>
-                                            <td>Emre</td>
-                                            <td>Koç</td>
-                                            <td>emre.koc@example.com</td>
-                                            <td>0542 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>12</td>
-                                            <td>Deniz</td>
-                                            <td>Özkan</td>
-                                            <td>deniz.ozkan@example.com</td>
-                                            <td>0543 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>13</td>
-                                            <td>Burak</td>
-                                            <td>Şen</td>
-                                            <td>burak.sen@example.com</td>
-                                            <td>0544 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>14</td>
-                                            <td>Selin</td>
-                                            <td>Kurt</td>
-                                            <td>selin.kurt@example.com</td>
-                                            <td>0545 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>15</td>
-                                            <td>Can</td>
-                                            <td>Yılmaz</td>
-                                            <td>can.yilmaz@example.com</td>
-                                            <td>0546 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>16</td>
-                                            <td>Ece</td>
-                                            <td>Demir</td>
-                                            <td>ece.demir@example.com</td>
-                                            <td>0547 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>17</td>
-                                            <td>Onur</td>
-                                            <td>Kaya</td>
-                                            <td>onur.kaya@example.com</td>
-                                            <td>0548 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>18</td>
-                                            <td>İrem</td>
-                                            <td>Şahin</td>
-                                            <td>irem.sahin@example.com</td>
-                                            <td>0549 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>19</td>
-                                            <td>Kemal</td>
-                                            <td>Öztürk</td>
-                                            <td>kemal.ozturk@example.com</td>
-                                            <td>0550 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>20</td>
-                                            <td>Zehra</td>
-                                            <td>Çelik</td>
-                                            <td>zehra.celik@example.com</td>
-                                            <td>0551 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>21</td>
-                                            <td>Murat</td>
-                                            <td>Arslan</td>
-                                            <td>murat.arslan@example.com</td>
-                                            <td>0552 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>22</td>
-                                            <td>Defne</td>
-                                            <td>Yıldız</td>
-                                            <td>defne.yildiz@example.com</td>
-                                            <td>0553 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>23</td>
-                                            <td>Serkan</td>
-                                            <td>Kılıç</td>
-                                            <td>serkan.kilic@example.com</td>
-                                            <td>0554 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>24</td>
-                                            <td>Aslı</td>
-                                            <td>Aydın</td>
-                                            <td>asli.aydin@example.com</td>
-                                            <td>0555 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>25</td>
-                                            <td>Okan</td>
-                                            <td>Koç</td>
-                                            <td>okan.koc@example.com</td>
-                                            <td>0556 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>26</td>
-                                            <td>Pınar</td>
-                                            <td>Özkan</td>
-                                            <td>pinar.ozkan@example.com</td>
-                                            <td>0557 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>27</td>
-                                            <td>Berk</td>
-                                            <td>Şen</td>
-                                            <td>berk.sen@example.com</td>
-                                            <td>0558 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>28</td>
-                                            <td>Ceren</td>
-                                            <td>Kurt</td>
-                                            <td>ceren.kurt@example.com</td>
-                                            <td>0559 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>29</td>
-                                            <td>Doruk</td>
-                                            <td>Yılmaz</td>
-                                            <td>doruk.yilmaz@example.com</td>
-                                            <td>0560 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>30</td>
-                                            <td>Eylül</td>
-                                            <td>Demir</td>
-                                            <td>eylul.demir@example.com</td>
-                                            <td>0561 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>31</td>
-                                            <td>Fırat</td>
-                                            <td>Kaya</td>
-                                            <td>firat.kaya@example.com</td>
-                                            <td>0562 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>32</td>
-                                            <td>Gamze</td>
-                                            <td>Şahin</td>
-                                            <td>gamze.sahin@example.com</td>
-                                            <td>0563 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>33</td>
-                                            <td>Hakan</td>
-                                            <td>Öztürk</td>
-                                            <td>hakan.ozturk@example.com</td>
-                                            <td>0564 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>34</td>
-                                            <td>İlayda</td>
-                                            <td>Çelik</td>
-                                            <td>ilayda.celik@example.com</td>
-                                            <td>0565 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>35</td>
-                                            <td>Kaan</td>
-                                            <td>Arslan</td>
-                                            <td>kaan.arslan@example.com</td>
-                                            <td>0566 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>36</td>
-                                            <td>Leyla</td>
-                                            <td>Yıldız</td>
-                                            <td>leyla.yildiz@example.com</td>
-                                            <td>0567 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>37</td>
-                                            <td>Mert</td>
-                                            <td>Kılıç</td>
-                                            <td>mert.kilic@example.com</td>
-                                            <td>0568 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>38</td>
-                                            <td>Naz</td>
-                                            <td>Aydın</td>
-                                            <td>naz.aydin@example.com</td>
-                                            <td>0569 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>39</td>
-                                            <td>Ozan</td>
-                                            <td>Koç</td>
-                                            <td>ozan.koc@example.com</td>
-                                            <td>0570 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>40</td>
-                                            <td>Pelin</td>
-                                            <td>Özkan</td>
-                                            <td>pelin.ozkan@example.com</td>
-                                            <td>0571 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>41</td>
-                                            <td>Rıza</td>
-                                            <td>Şen</td>
-                                            <td>riza.sen@example.com</td>
-                                            <td>0572 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>42</td>
-                                            <td>Seda</td>
-                                            <td>Kurt</td>
-                                            <td>seda.kurt@example.com</td>
-                                            <td>0573 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>43</td>
-                                            <td>Tolga</td>
-                                            <td>Yılmaz</td>
-                                            <td>tolga.yilmaz@example.com</td>
-                                            <td>0574 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>44</td>
-                                            <td>Umut</td>
-                                            <td>Demir</td>
-                                            <td>umut.demir@example.com</td>
-                                            <td>0575 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>45</td>
-                                            <td>Vildan</td>
-                                            <td>Kaya</td>
-                                            <td>vildan.kaya@example.com</td>
-                                            <td>0576 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>46</td>
-                                            <td>Yağız</td>
-                                            <td>Şahin</td>
-                                            <td>yagiz.sahin@example.com</td>
-                                            <td>0577 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>47</td>
-                                            <td>Zara</td>
-                                            <td>Öztürk</td>
-                                            <td>zara.ozturk@example.com</td>
-                                            <td>0578 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>48</td>
-                                            <td>Alp</td>
-                                            <td>Çelik</td>
-                                            <td>alp.celik@example.com</td>
-                                            <td>0579 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>49</td>
-                                            <td>Bade</td>
-                                            <td>Arslan</td>
-                                            <td>bade.arslan@example.com</td>
-                                            <td>0580 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>50</td>
-                                            <td>Cem</td>
-                                            <td>Yıldız</td>
-                                            <td>cem.yildiz@example.com</td>
-                                            <td>0581 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>51</td>
-                                            <td>Deniz</td>
-                                            <td>Kılıç</td>
-                                            <td>deniz.kilic@example.com</td>
-                                            <td>0582 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>52</td>
-                                            <td>Ela</td>
-                                            <td>Aydın</td>
-                                            <td>ela.aydin@example.com</td>
-                                            <td>0583 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>53</td>
-                                            <td>Fırat</td>
-                                            <td>Koç</td>
-                                            <td>firat.koc@example.com</td>
-                                            <td>0584 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>54</td>
-                                            <td>Gizem</td>
-                                            <td>Özkan</td>
-                                            <td>gizem.ozkan@example.com</td>
-                                            <td>0585 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>55</td>
-                                            <td>Hakan</td>
-                                            <td>Şen</td>
-                                            <td>hakan.sen@example.com</td>
-                                            <td>0586 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>56</td>
-                                            <td>İrem</td>
-                                            <td>Kurt</td>
-                                            <td>irem.kurt@example.com</td>
-                                            <td>0587 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>57</td>
-                                            <td>Kaan</td>
-                                            <td>Yılmaz</td>
-                                            <td>kaan.yilmaz@example.com</td>
-                                            <td>0588 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>58</td>
-                                            <td>Lara</td>
-                                            <td>Demir</td>
-                                            <td>lara.demir@example.com</td>
-                                            <td>0589 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>59</td>
-                                            <td>Mert</td>
-                                            <td>Kaya</td>
-                                            <td>mert.kaya@example.com</td>
-                                            <td>0590 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>60</td>
-                                            <td>Naz</td>
-                                            <td>Şahin</td>
-                                            <td>naz.sahin@example.com</td>
-                                            <td>0591 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>61</td>
-                                            <td>Ozan</td>
-                                            <td>Öztürk</td>
-                                            <td>ozan.ozturk@example.com</td>
-                                            <td>0592 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>62</td>
-                                            <td>Pınar</td>
-                                            <td>Çelik</td>
-                                            <td>pinar.celik@example.com</td>
-                                            <td>0593 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>63</td>
-                                            <td>Rıza</td>
-                                            <td>Arslan</td>
-                                            <td>riza.arslan@example.com</td>
-                                            <td>0594 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>64</td>
-                                            <td>Seda</td>
-                                            <td>Yıldız</td>
-                                            <td>seda.yildiz@example.com</td>
-                                            <td>0595 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>65</td>
-                                            <td>Tolga</td>
-                                            <td>Kılıç</td>
-                                            <td>tolga.kilic@example.com</td>
-                                            <td>0596 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>66</td>
-                                            <td>Umut</td>
-                                            <td>Aydın</td>
-                                            <td>umut.aydin@example.com</td>
-                                            <td>0597 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>67</td>
-                                            <td>Vildan</td>
-                                            <td>Koç</td>
-                                            <td>vildan.koc@example.com</td>
-                                            <td>0598 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>68</td>
-                                            <td>Yağız</td>
-                                            <td>Özkan</td>
-                                            <td>yagiz.ozkan@example.com</td>
-                                            <td>0599 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>69</td>
-                                            <td>Zara</td>
-                                            <td>Şen</td>
-                                            <td>zara.sen@example.com</td>
-                                            <td>0600 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>70</td>
-                                            <td>Alp</td>
-                                            <td>Kurt</td>
-                                            <td>alp.kurt@example.com</td>
-                                            <td>0601 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>71</td>
-                                            <td>Bade</td>
-                                            <td>Yılmaz</td>
-                                            <td>bade.yilmaz@example.com</td>
-                                            <td>0602 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>72</td>
-                                            <td>Cem</td>
-                                            <td>Demir</td>
-                                            <td>cem.demir@example.com</td>
-                                            <td>0603 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>73</td>
-                                            <td>Deniz</td>
-                                            <td>Kaya</td>
-                                            <td>deniz.kaya@example.com</td>
-                                            <td>0604 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>74</td>
-                                            <td>Ela</td>
-                                            <td>Şahin</td>
-                                            <td>ela.sahin@example.com</td>
-                                            <td>0605 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>75</td>
-                                            <td>Fırat</td>
-                                            <td>Öztürk</td>
-                                            <td>firat.ozturk@example.com</td>
-                                            <td>0606 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>76</td>
-                                            <td>Gizem</td>
-                                            <td>Çelik</td>
-                                            <td>gizem.celik@example.com</td>
-                                            <td>0607 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>77</td>
-                                            <td>Hakan</td>
-                                            <td>Arslan</td>
-                                            <td>hakan.arslan@example.com</td>
-                                            <td>0608 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>78</td>
-                                            <td>İrem</td>
-                                            <td>Yıldız</td>
-                                            <td>irem.yildiz@example.com</td>
-                                            <td>0609 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>79</td>
-                                            <td>Kaan</td>
-                                            <td>Kılıç</td>
-                                            <td>kaan.kilic@example.com</td>
-                                            <td>0610 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>80</td>
-                                            <td>Lara</td>
-                                            <td>Aydın</td>
-                                            <td>lara.aydin@example.com</td>
-                                            <td>0611 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>81</td>
-                                            <td>Mert</td>
-                                            <td>Koç</td>
-                                            <td>mert.koc@example.com</td>
-                                            <td>0612 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>82</td>
-                                            <td>Naz</td>
-                                            <td>Özkan</td>
-                                            <td>naz.ozkan@example.com</td>
-                                            <td>0613 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>83</td>
-                                            <td>Ozan</td>
-                                            <td>Şen</td>
-                                            <td>ozan.sen@example.com</td>
-                                            <td>0614 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>84</td>
-                                            <td>Pınar</td>
-                                            <td>Kurt</td>
-                                            <td>pinar.kurt@example.com</td>
-                                            <td>0615 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>85</td>
-                                            <td>Rıza</td>
-                                            <td>Yılmaz</td>
-                                            <td>riza.yilmaz@example.com</td>
-                                            <td>0616 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>86</td>
-                                            <td>Seda</td>
-                                            <td>Demir</td>
-                                            <td>seda.demir@example.com</td>
-                                            <td>0617 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>87</td>
-                                            <td>Tolga</td>
-                                            <td>Kaya</td>
-                                            <td>tolga.kaya@example.com</td>
-                                            <td>0618 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>88</td>
-                                            <td>Umut</td>
-                                            <td>Şahin</td>
-                                            <td>umut.sahin@example.com</td>
-                                            <td>0619 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>89</td>
-                                            <td>Vildan</td>
-                                            <td>Öztürk</td>
-                                            <td>vildan.ozturk@example.com</td>
-                                            <td>0620 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>90</td>
-                                            <td>Yağız</td>
-                                            <td>Çelik</td>
-                                            <td>yagiz.celik@example.com</td>
-                                            <td>0621 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>91</td>
-                                            <td>Zara</td>
-                                            <td>Arslan</td>
-                                            <td>zara.arslan@example.com</td>
-                                            <td>0622 123 4567</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>92</td>
-                                            <td>Alp</td>
-                                            <td>Yıldız</td>
-                                            <td>alp.yildiz@example.com</td>
-                                            <td>0623 234 5678</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>93</td>
-                                            <td>Bade</td>
-                                            <td>Kılıç</td>
-                                            <td>bade.kilic@example.com</td>
-                                            <td>0624 345 6789</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>94</td>
-                                            <td>Cem</td>
-                                            <td>Aydın</td>
-                                            <td>cem.aydin@example.com</td>
-                                            <td>0625 456 7890</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>95</td>
-                                            <td>Deniz</td>
-                                            <td>Koç</td>
-                                            <td>deniz.koc@example.com</td>
-                                            <td>0626 567 8901</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>96</td>
-                                            <td>Ela</td>
-                                            <td>Özkan</td>
-                                            <td>ela.ozkan@example.com</td>
-                                            <td>0627 678 9012</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>97</td>
-                                            <td>Fırat</td>
-                                            <td>Şen</td>
-                                            <td>firat.sen@example.com</td>
-                                            <td>0628 789 0123</td>
-                                            <td><span class="badge badge-warning">İzinli</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>98</td>
-                                            <td>Gizem</td>
-                                            <td>Kurt</td>
-                                            <td>gizem.kurt@example.com</td>
-                                            <td>0629 890 1234</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>99</td>
-                                            <td>Hakan</td>
-                                            <td>Yılmaz</td>
-                                            <td>hakan.yilmaz@example.com</td>
-                                            <td>0630 901 2345</td>
-                                            <td><span class="badge badge-danger">Pasif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>100</td>
-                                            <td>İrem</td>
-                                            <td>Demir</td>
-                                            <td>irem.demir@example.com</td>
-                                            <td>0631 012 3456</td>
-                                            <td><span class="badge badge-success">Aktif</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Ad</th>
+                                                <th>Soyad</th>
+                                                <th>E-posta</th>
+                                                <th>Telefon</th>
+                                                <th>Durum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Ahmet</td>
+                                                <td>Yılmaz</td>
+                                                <td>ahmet.yilmaz@example.com</td>
+                                                <td>0532 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Ayşe</td>
+                                                <td>Kaya</td>
+                                                <td>ayse.kaya@example.com</td>
+                                                <td>0533 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Mehmet</td>
+                                                <td>Demir</td>
+                                                <td>mehmet.demir@example.com</td>
+                                                <td>0534 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Zeynep</td>
+                                                <td>Şahin</td>
+                                                <td>zeynep.sahin@example.com</td>
+                                                <td>0535 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Ali</td>
+                                                <td>Öztürk</td>
+                                                <td>ali.ozturk@example.com</td>
+                                                <td>0536 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Fatma</td>
+                                                <td>Çelik</td>
+                                                <td>fatma.celik@example.com</td>
+                                                <td>0537 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>Mustafa</td>
+                                                <td>Arslan</td>
+                                                <td>mustafa.arslan@example.com</td>
+                                                <td>0538 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td>Elif</td>
+                                                <td>Yıldız</td>
+                                                <td>elif.yildiz@example.com</td>
+                                                <td>0539 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td>Hasan</td>
+                                                <td>Kılıç</td>
+                                                <td>hasan.kilic@example.com</td>
+                                                <td>0540 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td>Merve</td>
+                                                <td>Aydın</td>
+                                                <td>merve.aydin@example.com</td>
+                                                <td>0541 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>11</td>
+                                                <td>Emre</td>
+                                                <td>Koç</td>
+                                                <td>emre.koc@example.com</td>
+                                                <td>0542 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td>
+                                                <td>Deniz</td>
+                                                <td>Özkan</td>
+                                                <td>deniz.ozkan@example.com</td>
+                                                <td>0543 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>13</td>
+                                                <td>Burak</td>
+                                                <td>Şen</td>
+                                                <td>burak.sen@example.com</td>
+                                                <td>0544 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>14</td>
+                                                <td>Selin</td>
+                                                <td>Kurt</td>
+                                                <td>selin.kurt@example.com</td>
+                                                <td>0545 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>15</td>
+                                                <td>Can</td>
+                                                <td>Yılmaz</td>
+                                                <td>can.yilmaz@example.com</td>
+                                                <td>0546 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>16</td>
+                                                <td>Ece</td>
+                                                <td>Demir</td>
+                                                <td>ece.demir@example.com</td>
+                                                <td>0547 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>17</td>
+                                                <td>Onur</td>
+                                                <td>Kaya</td>
+                                                <td>onur.kaya@example.com</td>
+                                                <td>0548 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>18</td>
+                                                <td>İrem</td>
+                                                <td>Şahin</td>
+                                                <td>irem.sahin@example.com</td>
+                                                <td>0549 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>19</td>
+                                                <td>Kemal</td>
+                                                <td>Öztürk</td>
+                                                <td>kemal.ozturk@example.com</td>
+                                                <td>0550 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>20</td>
+                                                <td>Zehra</td>
+                                                <td>Çelik</td>
+                                                <td>zehra.celik@example.com</td>
+                                                <td>0551 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>21</td>
+                                                <td>Murat</td>
+                                                <td>Arslan</td>
+                                                <td>murat.arslan@example.com</td>
+                                                <td>0552 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>22</td>
+                                                <td>Defne</td>
+                                                <td>Yıldız</td>
+                                                <td>defne.yildiz@example.com</td>
+                                                <td>0553 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>23</td>
+                                                <td>Serkan</td>
+                                                <td>Kılıç</td>
+                                                <td>serkan.kilic@example.com</td>
+                                                <td>0554 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>24</td>
+                                                <td>Aslı</td>
+                                                <td>Aydın</td>
+                                                <td>asli.aydin@example.com</td>
+                                                <td>0555 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>25</td>
+                                                <td>Okan</td>
+                                                <td>Koç</td>
+                                                <td>okan.koc@example.com</td>
+                                                <td>0556 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>26</td>
+                                                <td>Pınar</td>
+                                                <td>Özkan</td>
+                                                <td>pinar.ozkan@example.com</td>
+                                                <td>0557 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>27</td>
+                                                <td>Berk</td>
+                                                <td>Şen</td>
+                                                <td>berk.sen@example.com</td>
+                                                <td>0558 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>28</td>
+                                                <td>Ceren</td>
+                                                <td>Kurt</td>
+                                                <td>ceren.kurt@example.com</td>
+                                                <td>0559 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>29</td>
+                                                <td>Doruk</td>
+                                                <td>Yılmaz</td>
+                                                <td>doruk.yilmaz@example.com</td>
+                                                <td>0560 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>30</td>
+                                                <td>Eylül</td>
+                                                <td>Demir</td>
+                                                <td>eylul.demir@example.com</td>
+                                                <td>0561 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>31</td>
+                                                <td>Fırat</td>
+                                                <td>Kaya</td>
+                                                <td>firat.kaya@example.com</td>
+                                                <td>0562 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>32</td>
+                                                <td>Gamze</td>
+                                                <td>Şahin</td>
+                                                <td>gamze.sahin@example.com</td>
+                                                <td>0563 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>33</td>
+                                                <td>Hakan</td>
+                                                <td>Öztürk</td>
+                                                <td>hakan.ozturk@example.com</td>
+                                                <td>0564 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>34</td>
+                                                <td>İlayda</td>
+                                                <td>Çelik</td>
+                                                <td>ilayda.celik@example.com</td>
+                                                <td>0565 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>35</td>
+                                                <td>Kaan</td>
+                                                <td>Arslan</td>
+                                                <td>kaan.arslan@example.com</td>
+                                                <td>0566 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>36</td>
+                                                <td>Leyla</td>
+                                                <td>Yıldız</td>
+                                                <td>leyla.yildiz@example.com</td>
+                                                <td>0567 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>37</td>
+                                                <td>Mert</td>
+                                                <td>Kılıç</td>
+                                                <td>mert.kilic@example.com</td>
+                                                <td>0568 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>38</td>
+                                                <td>Naz</td>
+                                                <td>Aydın</td>
+                                                <td>naz.aydin@example.com</td>
+                                                <td>0569 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>39</td>
+                                                <td>Ozan</td>
+                                                <td>Koç</td>
+                                                <td>ozan.koc@example.com</td>
+                                                <td>0570 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>40</td>
+                                                <td>Pelin</td>
+                                                <td>Özkan</td>
+                                                <td>pelin.ozkan@example.com</td>
+                                                <td>0571 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>41</td>
+                                                <td>Rıza</td>
+                                                <td>Şen</td>
+                                                <td>riza.sen@example.com</td>
+                                                <td>0572 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>42</td>
+                                                <td>Seda</td>
+                                                <td>Kurt</td>
+                                                <td>seda.kurt@example.com</td>
+                                                <td>0573 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43</td>
+                                                <td>Tolga</td>
+                                                <td>Yılmaz</td>
+                                                <td>tolga.yilmaz@example.com</td>
+                                                <td>0574 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>44</td>
+                                                <td>Umut</td>
+                                                <td>Demir</td>
+                                                <td>umut.demir@example.com</td>
+                                                <td>0575 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>45</td>
+                                                <td>Vildan</td>
+                                                <td>Kaya</td>
+                                                <td>vildan.kaya@example.com</td>
+                                                <td>0576 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>46</td>
+                                                <td>Yağız</td>
+                                                <td>Şahin</td>
+                                                <td>yagiz.sahin@example.com</td>
+                                                <td>0577 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>47</td>
+                                                <td>Zara</td>
+                                                <td>Öztürk</td>
+                                                <td>zara.ozturk@example.com</td>
+                                                <td>0578 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>48</td>
+                                                <td>Alp</td>
+                                                <td>Çelik</td>
+                                                <td>alp.celik@example.com</td>
+                                                <td>0579 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>49</td>
+                                                <td>Bade</td>
+                                                <td>Arslan</td>
+                                                <td>bade.arslan@example.com</td>
+                                                <td>0580 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>50</td>
+                                                <td>Cem</td>
+                                                <td>Yıldız</td>
+                                                <td>cem.yildiz@example.com</td>
+                                                <td>0581 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>51</td>
+                                                <td>Deniz</td>
+                                                <td>Kılıç</td>
+                                                <td>deniz.kilic@example.com</td>
+                                                <td>0582 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>52</td>
+                                                <td>Ela</td>
+                                                <td>Aydın</td>
+                                                <td>ela.aydin@example.com</td>
+                                                <td>0583 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>53</td>
+                                                <td>Fırat</td>
+                                                <td>Koç</td>
+                                                <td>firat.koc@example.com</td>
+                                                <td>0584 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>54</td>
+                                                <td>Gizem</td>
+                                                <td>Özkan</td>
+                                                <td>gizem.ozkan@example.com</td>
+                                                <td>0585 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>55</td>
+                                                <td>Hakan</td>
+                                                <td>Şen</td>
+                                                <td>hakan.sen@example.com</td>
+                                                <td>0586 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>56</td>
+                                                <td>İrem</td>
+                                                <td>Kurt</td>
+                                                <td>irem.kurt@example.com</td>
+                                                <td>0587 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>57</td>
+                                                <td>Kaan</td>
+                                                <td>Yılmaz</td>
+                                                <td>kaan.yilmaz@example.com</td>
+                                                <td>0588 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>58</td>
+                                                <td>Lara</td>
+                                                <td>Demir</td>
+                                                <td>lara.demir@example.com</td>
+                                                <td>0589 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>59</td>
+                                                <td>Mert</td>
+                                                <td>Kaya</td>
+                                                <td>mert.kaya@example.com</td>
+                                                <td>0590 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>60</td>
+                                                <td>Naz</td>
+                                                <td>Şahin</td>
+                                                <td>naz.sahin@example.com</td>
+                                                <td>0591 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>61</td>
+                                                <td>Ozan</td>
+                                                <td>Öztürk</td>
+                                                <td>ozan.ozturk@example.com</td>
+                                                <td>0592 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>62</td>
+                                                <td>Pınar</td>
+                                                <td>Çelik</td>
+                                                <td>pinar.celik@example.com</td>
+                                                <td>0593 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>63</td>
+                                                <td>Rıza</td>
+                                                <td>Arslan</td>
+                                                <td>riza.arslan@example.com</td>
+                                                <td>0594 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>64</td>
+                                                <td>Seda</td>
+                                                <td>Yıldız</td>
+                                                <td>seda.yildiz@example.com</td>
+                                                <td>0595 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>65</td>
+                                                <td>Tolga</td>
+                                                <td>Kılıç</td>
+                                                <td>tolga.kilic@example.com</td>
+                                                <td>0596 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>66</td>
+                                                <td>Umut</td>
+                                                <td>Aydın</td>
+                                                <td>umut.aydin@example.com</td>
+                                                <td>0597 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>67</td>
+                                                <td>Vildan</td>
+                                                <td>Koç</td>
+                                                <td>vildan.koc@example.com</td>
+                                                <td>0598 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>68</td>
+                                                <td>Yağız</td>
+                                                <td>Özkan</td>
+                                                <td>yagiz.ozkan@example.com</td>
+                                                <td>0599 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>69</td>
+                                                <td>Zara</td>
+                                                <td>Şen</td>
+                                                <td>zara.sen@example.com</td>
+                                                <td>0600 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>70</td>
+                                                <td>Alp</td>
+                                                <td>Kurt</td>
+                                                <td>alp.kurt@example.com</td>
+                                                <td>0601 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>71</td>
+                                                <td>Bade</td>
+                                                <td>Yılmaz</td>
+                                                <td>bade.yilmaz@example.com</td>
+                                                <td>0602 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>72</td>
+                                                <td>Cem</td>
+                                                <td>Demir</td>
+                                                <td>cem.demir@example.com</td>
+                                                <td>0603 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>73</td>
+                                                <td>Deniz</td>
+                                                <td>Kaya</td>
+                                                <td>deniz.kaya@example.com</td>
+                                                <td>0604 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>74</td>
+                                                <td>Ela</td>
+                                                <td>Şahin</td>
+                                                <td>ela.sahin@example.com</td>
+                                                <td>0605 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>75</td>
+                                                <td>Fırat</td>
+                                                <td>Öztürk</td>
+                                                <td>firat.ozturk@example.com</td>
+                                                <td>0606 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>76</td>
+                                                <td>Gizem</td>
+                                                <td>Çelik</td>
+                                                <td>gizem.celik@example.com</td>
+                                                <td>0607 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>77</td>
+                                                <td>Hakan</td>
+                                                <td>Arslan</td>
+                                                <td>hakan.arslan@example.com</td>
+                                                <td>0608 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>78</td>
+                                                <td>İrem</td>
+                                                <td>Yıldız</td>
+                                                <td>irem.yildiz@example.com</td>
+                                                <td>0609 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>79</td>
+                                                <td>Kaan</td>
+                                                <td>Kılıç</td>
+                                                <td>kaan.kilic@example.com</td>
+                                                <td>0610 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>80</td>
+                                                <td>Lara</td>
+                                                <td>Aydın</td>
+                                                <td>lara.aydin@example.com</td>
+                                                <td>0611 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>81</td>
+                                                <td>Mert</td>
+                                                <td>Koç</td>
+                                                <td>mert.koc@example.com</td>
+                                                <td>0612 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>82</td>
+                                                <td>Naz</td>
+                                                <td>Özkan</td>
+                                                <td>naz.ozkan@example.com</td>
+                                                <td>0613 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>83</td>
+                                                <td>Ozan</td>
+                                                <td>Şen</td>
+                                                <td>ozan.sen@example.com</td>
+                                                <td>0614 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>84</td>
+                                                <td>Pınar</td>
+                                                <td>Kurt</td>
+                                                <td>pinar.kurt@example.com</td>
+                                                <td>0615 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>85</td>
+                                                <td>Rıza</td>
+                                                <td>Yılmaz</td>
+                                                <td>riza.yilmaz@example.com</td>
+                                                <td>0616 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>86</td>
+                                                <td>Seda</td>
+                                                <td>Demir</td>
+                                                <td>seda.demir@example.com</td>
+                                                <td>0617 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>87</td>
+                                                <td>Tolga</td>
+                                                <td>Kaya</td>
+                                                <td>tolga.kaya@example.com</td>
+                                                <td>0618 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>88</td>
+                                                <td>Umut</td>
+                                                <td>Şahin</td>
+                                                <td>umut.sahin@example.com</td>
+                                                <td>0619 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>89</td>
+                                                <td>Vildan</td>
+                                                <td>Öztürk</td>
+                                                <td>vildan.ozturk@example.com</td>
+                                                <td>0620 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>90</td>
+                                                <td>Yağız</td>
+                                                <td>Çelik</td>
+                                                <td>yagiz.celik@example.com</td>
+                                                <td>0621 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>91</td>
+                                                <td>Zara</td>
+                                                <td>Arslan</td>
+                                                <td>zara.arslan@example.com</td>
+                                                <td>0622 123 4567</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>92</td>
+                                                <td>Alp</td>
+                                                <td>Yıldız</td>
+                                                <td>alp.yildiz@example.com</td>
+                                                <td>0623 234 5678</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>93</td>
+                                                <td>Bade</td>
+                                                <td>Kılıç</td>
+                                                <td>bade.kilic@example.com</td>
+                                                <td>0624 345 6789</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>94</td>
+                                                <td>Cem</td>
+                                                <td>Aydın</td>
+                                                <td>cem.aydin@example.com</td>
+                                                <td>0625 456 7890</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>95</td>
+                                                <td>Deniz</td>
+                                                <td>Koç</td>
+                                                <td>deniz.koc@example.com</td>
+                                                <td>0626 567 8901</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>96</td>
+                                                <td>Ela</td>
+                                                <td>Özkan</td>
+                                                <td>ela.ozkan@example.com</td>
+                                                <td>0627 678 9012</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>97</td>
+                                                <td>Fırat</td>
+                                                <td>Şen</td>
+                                                <td>firat.sen@example.com</td>
+                                                <td>0628 789 0123</td>
+                                                <td><span class="badge badge-warning">İzinli</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>98</td>
+                                                <td>Gizem</td>
+                                                <td>Kurt</td>
+                                                <td>gizem.kurt@example.com</td>
+                                                <td>0629 890 1234</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>99</td>
+                                                <td>Hakan</td>
+                                                <td>Yılmaz</td>
+                                                <td>hakan.yilmaz@example.com</td>
+                                                <td>0630 901 2345</td>
+                                                <td><span class="badge badge-danger">Pasif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>100</td>
+                                                <td>İrem</td>
+                                                <td>Demir</td>
+                                                <td>irem.demir@example.com</td>
+                                                <td>0631 012 3456</td>
+                                                <td><span class="badge badge-success">Aktif</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1062,52 +1212,118 @@
 
     </div><!-- /#right-panel -->
 
+    <!-- Profile Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="profile-popup" id="profilePopup">
+        <button class="close-popup" onclick="closeProfilePopup()">&times;</button>
+        <img src="images/benvecano.jpg" alt="Profile Picture">
+        <h3>Canolar</h3>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
 
+    <script>
+        function showProfilePopup(event) {
+            event.preventDefault();
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('profilePopup').style.display = 'block';
+        }
 
-    <script src="assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="assets/js/init/datatables-init.js"></script>
+        function closeProfilePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('profilePopup').style.display = 'none';
+        }
 
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // Eğer tablo zaten başlatılmışsa yok et
-            if ($.fn.DataTable.isDataTable('#bootstrap-data-table')) {
-                $('#bootstrap-data-table').DataTable().destroy();
-            }
-            
-            var table = $('#bootstrap-data-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
-                },
-                "pageLength": 25,
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tümü"]],
-                "processing": true,
-                "deferRender": true,
-                "order": [[0, 'asc']],
-                "responsive": true,
-                "dom": '<"top"lf>rt<"bottom"ip><"clear">',
-                "stateSave": true,
-                "initComplete": function() {
-                    $('.dataTables_filter input').attr('placeholder', 'Ara...');
-                }
-            });
-        });
+        // Overlay'e tıklandığında da popup'ı kapat
+        document.getElementById('overlay').addEventListener('click', closeProfilePopup);
     </script>
 
 
+<script src="assets/js/lib/data-table/datatables.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/jszip.min.js"></script>
+<script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="assets/js/init/datatables-init.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        if ($.fn.DataTable.isDataTable('#bootstrap-data-table')) {
+            $('#bootstrap-data-table').DataTable().destroy();
+        }
+        
+        $('#bootstrap-data-table').DataTable({
+            "language": {
+                "lengthMenu": "_MENU_ kayıt göster",
+                "zeroRecords": "Kayıt bulunamadı",
+                "info": "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+                "infoEmpty": "Kayıt yok",
+                "infoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                "search": "Ara:",
+                "paginate": {
+                    "first": "İlk",
+                    "last": "Son",
+                    "next": "Sonraki",
+                    "previous": "Önceki"
+                }
+            },
+            "pageLength": 5,
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Tümü"]],
+            "responsive": true,
+            "autoWidth": true,
+            "scrollX": false,
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "stateSave": true,
+            "initComplete": function() {
+                $('.dataTables_filter input').attr('placeholder', 'Ara...');
+                $('.dataTables_filter').css('float', 'right');
+                $('.dataTables_length').css('float', 'right');
+                $('.dataTables_filter').css('margin-left', '15px');
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const links = document.querySelectorAll('a[href]');
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (this.hostname !== window.location.hostname || this.hash) return;
+                
+                // Geçiş animasyonunu kaldırmak için aşağıdaki satırları yorum satırı yapabilirsiniz
+                /*
+                e.preventDefault();
+                const href = this.href;
+                const transition = document.querySelector('.page-transition');
+                transition.classList.add('active');
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 1000);
+                */
+            });
+        });
+
+        window.addEventListener('load', function () {
+            const transition = document.querySelector('.page-transition');
+            if (transition) {
+                transition.classList.remove('active');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
+

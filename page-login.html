@@ -25,6 +25,9 @@
       background-position: center;
       background-attachment: fixed;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
     }
     body::before {
       content: '';
@@ -159,14 +162,22 @@
     }
     .left-design, .right-design {
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
     }
     .design-box {
       background: rgba(255, 255, 255, 0.95);
-      border-radius: 15px;
+      border-radius: 50px;
       padding: 25px;
       margin-bottom: 20px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .design-box:hover {
       transform: translateY(-5px);
@@ -191,6 +202,41 @@
       .left-design, .right-design {
         display: none;
       }
+      .logo-image {
+        width: 150px;
+        height: 150px;
+      }
+      .logo {
+        font-size: 2rem;
+      }
+      .logo-tagline {
+        font-size: 0.9rem;
+      }
+      .card {
+        margin: 0 15px;
+      }
+      .container {
+        padding: 15px;
+      }
+    }
+    @media (max-width: 576px) {
+      .logo-image {
+        width: 120px;
+        height: 120px;
+      }
+      .logo {
+        font-size: 1.8rem;
+      }
+      .logo-tagline {
+        font-size: 0.8rem;
+      }
+      .card-body {
+        padding: 1.5rem;
+      }
+      .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
@@ -199,21 +245,19 @@
 <div class="container">
   <br><br>  
   <div class="row justify-content-center">
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-4 d-none d-md-block">
       <div class="left-design">
         <div class="design-box">
-          <i class="fas fa-brain design-icon"></i>
-          <h4>Psikolojik Destek</h4>
-          <p>Uzman psikologlarımızla birlikte size özel destek programları</p>
+          <i class="fas fa-quote-left design-icon" style="font-size: 1.5rem;"></i>
+          <p style="font-size: 0.85rem; margin-bottom: 0;">"Hayat bir yolculuktur, her gün yeni bir başlangıçtır. Kendinizi keşfetmek için asla geç değildir." - Abraham Maslow</p>
         </div>
         <div class="design-box">
-          <i class="fas fa-chart-line design-icon"></i>
-          <h4>İlerleme Takibi</h4>
-          <p>Gelişiminizi detaylı raporlarla takip edin</p>
+          <i class="fas fa-quote-left design-icon" style="font-size: 1.5rem;"></i>
+          <p style="font-size: 0.85rem; margin-bottom: 0;">"İnsanın en büyük keşfi, kendi içindeki güçtür. Bu gücü keşfeden, hayatın tüm zorluklarını aşabilir." - Viktor Frankl</p>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6 col-md-8 col-sm-12">
       <div class="logo-container">
         <img src="images/logo.png" alt="PsyAware Logo" class="logo-image">
         <a href="/" class="logo">
@@ -269,20 +313,20 @@
 
         <div class="border-top card-body text-center">
           <a href="page-register.html" class="forgot-link">Hesabınız yok mu? Kayıt olun</a>
+          <br>
+          <small class="text-muted">Giriş yaparak <a href="privacy-policy.html">Gizlilik Politikamızı</a> kabul etmiş olursunuz.</small>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-4 d-none d-md-block">
       <div class="right-design">
         <div class="design-box">
-          <i class="fas fa-users design-icon"></i>
-          <h4>Topluluk Desteği</h4>
-          <p>Benzer deneyimleri paylaşan kişilerle bağlantı kurun</p>
+          <i class="fas fa-quote-left design-icon" style="font-size: 1.5rem;"></i>
+          <p style="font-size: 0.85rem; margin-bottom: 0;">"Kendinizi olduğunuz gibi kabul etmek, değişimin ilk adımıdır." - Erich Fromm</p>
         </div>
         <div class="design-box">
-          <i class="fas fa-lock design-icon"></i>
-          <h4>Güvenli Platform</h4>
-          <p>Verileriniz güvende, gizliliğiniz bizim önceliğimiz</p>
+          <i class="fas fa-quote-left design-icon" style="font-size: 1.5rem;"></i>
+          <p style="font-size: 0.85rem; margin-bottom: 0;">"Hayat bir ayna gibidir, ona gülümserseniz o da size gülümser." - William James</p>
         </div>
       </div>
     </div>

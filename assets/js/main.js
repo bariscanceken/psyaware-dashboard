@@ -4,6 +4,46 @@ jQuery(document).ready(function($) {
 
 	"use strict";
 
+	// Dropdown menüler için gerekli kodlar
+	$('.dropdown-toggle').not('.user-area .dropdown-toggle').on('click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var $dropdown = $(this).next('.dropdown-menu');
+		
+		// Diğer açık menüleri kapat
+		$('.dropdown-menu, .user-menu').not($dropdown).removeClass('show');
+		
+		// Tıklanan menüyü aç/kapat
+		$dropdown.toggleClass('show');
+	});
+
+	// Sayfa herhangi bir yerine tıklandığında dropdown'ları kapat
+	$(document).on('click', function(e) {
+		if (!$(e.target).closest('.dropdown, .user-area').length) {
+			$('.dropdown-menu, .user-menu').removeClass('show');
+		}
+	});
+
+	// ESC tuşuna basıldığında dropdown'ları kapat
+	$(document).on('keydown', function(e) {
+		if (e.keyCode === 27) {
+			$('.dropdown-menu, .user-menu').removeClass('show');
+		}
+	});
+
+	// Kullanıcı menüsü için özel işlem
+	$('.user-area .dropdown-toggle').on('click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var $userMenu = $(this).next('.user-menu');
+		
+		// Diğer açık menüleri kapat
+		$('.dropdown-menu, .user-menu').not($userMenu).removeClass('show');
+		
+		// Kullanıcı menüsünü aç/kapat
+		$userMenu.toggleClass('show');
+	});
+
 	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
 		new SelectFx(el);
 	});
